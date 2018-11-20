@@ -1,8 +1,6 @@
 <?php
 
 require_once 'clase_conexion.php';
-
-
 function obtener_id_estudiante_con_id_usuario($id_usuario) {
     $conexion = new Conexion();
     $statement = 'select es.idestudiante from usuario as us, estudiante as es where us.idUsuario=es.id_usuario and us.idUsuario=?';
@@ -46,6 +44,7 @@ function insertar_estudiante($ci, $nombres, $apellidos, $carrera, $facultad, $ma
         return false;
     }
 }
+
 function insertarValoracion($id_objeto_aprendizaje,$idusuario,$puntaje){
     $conexion=new Conexion();
     $statement = 'INSERT INTO valoracion (idvaloracion,idobjeto_aprendizaje,idusuario,puntuacion) VALUES (?,?,?,?)';

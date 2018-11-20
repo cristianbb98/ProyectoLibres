@@ -2,11 +2,6 @@
 session_start();
 if (@!$_SESSION['usuario']) {
     header("Location:../../index2.php");
-} elseif ($_SESSION['tipo_usuario'] == 'EST') {
-    //header("Location:index2.php");
-    echo "eres estudiante";
-} elseif ($_SESSION['tipo_usuario'] == 'ADM') {
-    echo "eres estudiante";
 }
 
     require_once 'High/examples/pie-basic/conexion.php';

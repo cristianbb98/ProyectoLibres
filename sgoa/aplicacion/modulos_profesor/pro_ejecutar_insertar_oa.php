@@ -23,10 +23,10 @@ $statement = 'INSERT INTO objeto_aprendizaje (nombre,descripcion,id_usuario,inst
 $consulta = $conexion->prepare($statement);
 if ($consulta->execute(array($nombre, $descripcion, $id_usuario, $institucion, $palabras_clave, $_FILES["o_aprendizaje"]["size"], $target_file, consultar_materiaxid($cbx_materia), 0))) {
     $seGuardo_db = 1;
-    $mail = 'alexis.maldonado@epn.edu.ec';
+    /*$mail = 'alexis.maldonado@epn.edu.ec';
     $user = 'alexis';
 
-    enviar_mail3($mail, $user, $target_file);
+    enviar_mail3($mail, $user, $target_file);*/
     actualizar_cant_materia($cbx_materia);
     echo "1";
 } else {
