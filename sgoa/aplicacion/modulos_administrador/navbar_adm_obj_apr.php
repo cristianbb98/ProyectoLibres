@@ -14,7 +14,7 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Objetos de aprendizaje
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="adm_objetos_aprendizaje.php">Importar y catalogar objetos de aprendizaje</a></li>
+                        <!--<li><a href="adm_objetos_aprendizaje.php">Importar y catalogar objetos de aprendizaje</a></li>-->
                         <li><a href="adm_buscar.php">Buscar y administrar objetos de aprendizaje</a></li>
                     </ul>
                 </li>

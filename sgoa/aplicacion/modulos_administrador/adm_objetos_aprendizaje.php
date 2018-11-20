@@ -2,10 +2,6 @@
 session_start();
 if (@!$_SESSION['usuario']) {
     header("Location:../../index.php");
-} elseif ($_SESSION['tipo_usuario'] == 'EST') {
-    echo "eres estudiante";
-} elseif ($_SESSION['tipo_usuario'] == 'PRO') {
-    echo "eres PROFESOR";
 }
     require_once '../modulos_profesor/High/examples/pie-basic/conexion.php';
     $sql = "select * from facultad";
@@ -119,14 +115,9 @@ if (@!$_SESSION['usuario']) {
                 <label >Carreras:</label>
                  <select class= "form-control" id="cbx_carreras"  name="carreras" dir="ltr" required>
                 <option value="0">Selecione una Carrera</option>
-                <?php 
-
-                    while($row = mysqli_fetch_array($result)){
-                                ?>
-                    <option value = "<?php echo $row['idfacultad'];?>"> <?php echo $row['facultad'];?></option>
-                    <?php
-                                    }
-                                ?>
+                    <?php while($row = mysqli_fetch_array($result)){?>
+                        <option value = "<?php echo $row['idfacultad'];?>"> <?php echo $row['facultad'];?></option>
+                        <?php } ?>
                             </select>
                             <label >Materias:</label>
                             <select class= "form-control" id="cbx_materia" name="cbx_materia" dir="ltr" required>

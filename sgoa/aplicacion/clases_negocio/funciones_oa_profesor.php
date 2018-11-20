@@ -312,6 +312,17 @@ function consultar_materiaxid($cbx_materia){
     }
 }
 
+function insertar_estudiante($ci, $nombres, $apellidos, $carrera, $facultad, $mail, $id_usuario) {
+    $conexion = new Conexion();
+    $statement = 'INSERT INTO estudiante (ci,nombres,apellidos, carrera, id_facultad, mail, id_usuario) VALUES (?,?,?,?,?,?,?)';
+    $consulta = $conexion->prepare($statement);
+    if ($consulta->execute(array($ci, $nombres, $apellidos, $carrera, $facultad, $mail, $id_usuario))) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function enviar_mail3($to_mail, $usuario, $contrasenia)
 {
 	$email = 'proyecto.libres.2018b@gmail.com';
