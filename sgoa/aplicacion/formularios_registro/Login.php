@@ -74,5 +74,12 @@
         <script type="text/javascript" src="../../intro.js/intro.js"></script>
         <br/>
         <a class="btn btn-info btn-success" href="javascript:void(0);" onclick="javascript:introJs().setOption('showProgress', true).start();">Ayuda</a>
+        <form method="post">
+            <h2 style="color: #004e91; font-size: 250%;">Contáctanos</h2>
+            <div data-step="3" data-intro="En esta sección te puedes registrar" class="Registro_usuarios">
+                <td width="50%"> <a href="../../aplicacion/modulos_comunes/contacto_experiencia.php"> Cúentanos tu experiencia</a></td></br>
+                <label></label>
+            </div>
+        </form>
     </body>
 </html>
