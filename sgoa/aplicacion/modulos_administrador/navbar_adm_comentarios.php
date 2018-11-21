@@ -19,8 +19,8 @@
                     </ul>
                 </li>
                 <li><a href="adm_buscar_profesores.php">Gestionar Profesores</a></li>
-                <li class="active"><a href="adm_buscar_estudiantes.php">Gestionar Estudiantes</a></li>
-                <li><a href="adm_comentarios_todos.php">Gestionar comentarios</a></li>
+                <li ><a href="adm_buscar_estudiantes.php">Gestionar Estudiantes</a></li>
+                <li class="active"><a href="adm_comentarios_todos.php">Gestionar comentarios</a></li>
                 <li><a href="adm_herramientas.php">Herramientas</a></li>
                 
             </ul>
@@ -30,6 +30,8 @@
         </div>
     </div>
 </nav>
+
+
 
 
 
