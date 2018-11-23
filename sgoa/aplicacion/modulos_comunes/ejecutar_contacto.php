@@ -23,6 +23,6 @@ if ($consulta->rowCount() != 0) {
     echo '<script>alert("El usuario ingresado no existe. Por favor regístrese.")</script> ';
 }
 
-echo "<script>location.href='../../aplicacion/formularios_registro/Login.php'</script>";
+echo "<script>location.href='../../sgoa/aplicacion/formularios_registro/Login.php'</script>";
 
 ?>

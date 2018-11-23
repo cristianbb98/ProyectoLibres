@@ -551,7 +551,7 @@ CREATE TABLE `experiencia` (
  `idComentario` INT AUTO_INCREMENT PRIMARY KEY,
  `idUsuario` INT NOT NULL,
  `descripcion` VARCHAR(60),
- `idComentario` VARCHAR(200),
+ `comentario` VARCHAR(200),
  `respondido` VARCHAR(2) DEFAULT 'NO',
   `fecha` timestamp DEFAULT CURRENT_TIMESTAMP);
 

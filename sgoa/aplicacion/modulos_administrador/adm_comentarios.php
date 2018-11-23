@@ -2,7 +2,7 @@
 session_start();
 date_default_timezone_set('America/Guayaquil');
 if (@!$_SESSION['usuario']) {
-    header("Location:../../index2.php");
+    echo "<script>location.href='../../sgoa/aplicacion/formularios_registro/Login.php'</script>";
 } elseif ($_SESSION['tipo_usuario'] == 'EST') {
     //header("Location:index2.php");
     echo "eres estudiante";
