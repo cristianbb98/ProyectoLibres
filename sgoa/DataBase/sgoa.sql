@@ -552,6 +552,7 @@ CREATE TABLE `experiencia` (
  `idUsuario` INT NOT NULL,
  `descripcion` VARCHAR(60),
  `idComentario` VARCHAR(200),
+ `respondido` VARCHAR(2) DEFAULT 'NO',
   `fecha` timestamp DEFAULT CURRENT_TIMESTAMP);
 
   ALTER TABLE `experiencia`
