@@ -56,7 +56,6 @@
                     <i class="glyphicon glyphicon-lock form-control-feedback"></i>
                 </div>
             </div>
-
             <br>
             <button class="btn btn-primary btn-s" type="submit">
                 <span class="glyphicon glyphicon-log-in"></span> Iniciar sesión
@@ -80,7 +79,9 @@
                 <label></label>
                 </div>
             </div>
+            <br>
             <a class="btn btn-info btn-success" href="javascript:void(0);" onclick="javascript:introJs().setOption('showProgress', true).start();">Ayuda</a>
+            <br>
         </form>
     </body>
 </html>
