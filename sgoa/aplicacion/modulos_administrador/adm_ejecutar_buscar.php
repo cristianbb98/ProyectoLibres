@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (@!$_SESSION['usuario']) {
-    echo "<script>location.href='../../sgoa/aplicacion/formularios_registro/Login.php'</script>";
+    echo "<script>location.href='../../aplicacion/formularios_registro/Login.php'</script>";
 } elseif ($_SESSION['tipo_usuario'] == 'EST') {
 //header("Location:index2.php");
     echo "eres estudiante";
