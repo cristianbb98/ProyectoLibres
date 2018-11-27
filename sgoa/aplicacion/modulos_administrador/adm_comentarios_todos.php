@@ -89,6 +89,7 @@ if (@!$_SESSION['usuario']) {
                                 <option value="">Filtrar por:</option>
                                 <!--<option value="nombre">nombre</option>-->
                                <!-- <option value="usuario">usuario</option>-->
+                               
                                 <!--<option value="cedula">cédula</option>-->
                             </select></br>
                         </div>
