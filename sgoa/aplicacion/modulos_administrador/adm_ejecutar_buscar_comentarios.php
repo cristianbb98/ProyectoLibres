@@ -108,6 +108,7 @@ if (@!$_SESSION['usuario']) {
                     $criterio = filter_input(INPUT_POST, 'tipo_criterio');
                     $valor_criterio = filter_input(INPUT_POST, 'criterio_busqueda');
                     $statement = 'select u.*,p.nombres, p.apellidos, p.ci,p.mail from usuario as u, profesor as p where u.idUsuario=p.id_usuario';
+                    //$statement = 'select * from experiencia join usuario on (experiencia.idUsuario = usuario.idUsuario)';
                     $clausula_where = '';
                     switch ($criterio) {
                         case 'nombre':
@@ -146,6 +147,7 @@ if (@!$_SESSION['usuario']) {
                     if ($consulta->rowCount() != 0) {
                         while ($row = $consulta->fetch()) {
                             echo '<tr class="success">';
+                            //echo '<td>' . $row['idComentario'] . '</td>';
                             echo '<td>' . $row['idUsuario'] . '</td>';
                             echo '<td>' . $row['usuario'] . '</td>';
                             echo '<td>' . $row['tipo_usuario'] . '</td>';

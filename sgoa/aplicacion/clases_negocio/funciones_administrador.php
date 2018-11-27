@@ -90,8 +90,23 @@ function enviar_mail2($mail, $usuario)
     }
 }
 
-
-
+function enviar_mail_respuesta($mail, $asunto, $respuesta)
+{
+	$email = 'proyecto.libres.2018b@gmail.com';
+	echo '<script>alert($mail)</script>';
+    $to = ''. $mail . '';
+    $subject = $asunto;
+    $message = $respuesta;
+    $headers = 'From: ' .$email . "\r\n". 
+	'Reply-To: ' . $email. "\r\n" . 
+	'X-Mailer: PHP/' . phpversion();
+  
+	if (mail($mail, $subject, $message, $headers)) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
 
 
 ?>
