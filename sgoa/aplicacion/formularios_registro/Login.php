@@ -23,6 +23,7 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="../../index.php">Inicio</a>
+					<!--<a class="navbar-brand" href="../../aplicacion/formularios_registro/Login.php">Inicio</a>-->
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -60,6 +61,17 @@
             <button class="btn btn-primary btn-s" type="submit">
                 <span class="glyphicon glyphicon-log-in"></span> Iniciar sesión
             </button>
+            <p>&nbsp;</p>
+			
+			
+			<button class="btn btn-password btn-s" type="submit">
+                <span class="glyphicon glyphicon-log-in"> <a href="../../aplicacion/formularios_registro/recuperar_contrasenia.php"> Cambiar Contraseña</a></span>
+                
+                
+            </button>
+            <p>&nbsp;</p>
+			
+           
             <!--<h2 style = "color: #004e91; font-size: 80%"; align="right"> ¿Olvidó su contraseña? </h2>-->
         </form>
         <form method="post">
