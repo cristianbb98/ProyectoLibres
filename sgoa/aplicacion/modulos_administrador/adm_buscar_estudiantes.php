@@ -105,7 +105,7 @@ if (@!$_SESSION['usuario']) {
                     require_once '../clases_negocio/clase_conexion.php';
                     require '../clases_negocio/funciones_administrador.php';
                     
-                    $statement = ("select u.*,e.nombres, e.apellidos, e.ci from usuario as u, estudiante as e where u.idUsuario=e.id_usuario order by activo");
+                    $statement = ("select u.*,e.nombres, e.apellidos, e.ci, e.mail from usuario as u, estudiante as e where u.idUsuario=e.id_usuario order by activo");
                     $conexion = new Conexion();
                     $consulta = $conexion->prepare($statement);
                     $consulta->setFetchMode(PDO::FETCH_ASSOC);
@@ -118,7 +118,7 @@ if (@!$_SESSION['usuario']) {
                     echo '<tr class="warning">';
                     echo '<td>Id usuario</td>';
                     echo '<td>Usuario</td>';
-                    echo '<td>tipo</td>';
+                    echo '<td>E-mail</td>';
                     echo '<td>Activo?</td>';
                     echo '<td>Nombre completo</td>';
                     echo '<td>Cedula</td>';
@@ -129,7 +129,7 @@ if (@!$_SESSION['usuario']) {
                             echo '<tr class="success">';
                             echo '<td>' . $row['idUsuario'] . '</td>';
                             echo '<td>' . $row['usuario'] . '</td>';
-                            echo '<td>' . $row['tipo_usuario'] . '</td>';
+                            echo '<td>' . $row['mail'] . '</td>';
                             echo '<td>' . $row['activo'] . '</td>';
                             echo '<td>' . $row['apellidos'] . '  ' . $row['nombres'] . '</td>';
                             echo '<td>' . $row['ci'].'</td>';

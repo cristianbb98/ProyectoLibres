@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (@!$_SESSION['usuario']) {
-    echo "<script>location.href='../../aplicacion/formularios_registro/Login.php'</script>";
+    header("Location:../../index2.php");
 } elseif ($_SESSION['tipo_usuario'] == 'PRO') {
 //header("Location:index2.php");
     echo "ERES PROFESOR";
@@ -71,7 +71,7 @@ if (@!$_SESSION['usuario']) {
 
 
     <body>
-        <?php include './navbar_adm_profesores.php'; ?>
+        <?php include './navbar_adm_comentarios.php'; ?>
         <!-- Inicio formulario de búsqueda -->
 
         <!-- presentacion de objetos de aprendizaje-->
@@ -79,17 +79,17 @@ if (@!$_SESSION['usuario']) {
             <div class="row content">
                 <!-- --------------------------------------------- -->
                 <div class="col-sm-12 text-center"> 
-                    <h2> Administración de profesores</h2>
-                    <form onsubmit="return validar_busqueda_cedula()" action="../modulos_administrador/adm_ejecutar_buscar_profesores.php" method="post" enctype="multipart/form-data">
+                    <h2> Administración de comentarios</h2>
+                    <form onsubmit="return validar_busqueda_cedula()" action="../modulos_administrador/adm_ejecutar_buscar_comentarios.php" method="post" enctype="multipart/form-data">
                         <div class="col-md-3">
-
+                            <a href="adm_comentarios.todos.php">Regresar</a>
                         </div>
                         <div class="col-md-3 text-left ">
                             <select class= "form-control" name="tipo_criterio" dir="ltr" required id="select_criterio">
                                 <option value="">Filtrar por:</option>
-                                <option value="nombre">nombre</option>
+                                <!--<option value="nombre">nombre</option>-->
                                 <option value="usuario">usuario</option>
-                                <option value="cedula">cédula</option>
+                                <!--<option value="cedula">cédula</option>-->
                             </select></br>
                         </div>
                         <div class="col-md-3 text-center">
@@ -105,7 +105,27 @@ if (@!$_SESSION['usuario']) {
                     require_once '../clases_negocio/clase_conexion.php';
                     require '../clases_negocio/funciones_administrador.php';
 
-                    $statement = ("select u.*,p.nombres, p.apellidos, p.ci, p.mail from usuario as u, profesor as p where u.idUsuario=p.id_usuario order by activo");
+                    $criterio = filter_input(INPUT_POST, 'tipo_criterio');
+                    $valor_criterio = filter_input(INPUT_POST, 'criterio_busqueda');
+                    $statement = 'select u.*,p.nombres, p.apellidos, p.ci,p.mail from usuario as u, profesor as p where u.idUsuario=p.id_usuario';
+                    //$statement = 'select * from experiencia join usuario on (experiencia.idUsuario = usuario.idUsuario)';
+                    $clausula_where = '';
+                    switch ($criterio) {
+                        case 'nombre':
+                            $clausula_where = ' and (p.nombres like "%' . $valor_criterio . '%"  or p.apellidos like "%' . $valor_criterio . '%")';
+                            $statement = $statement . $clausula_where;
+                            break;
+                        case 'usuario':
+                            $clausula_where = ' and u.usuario like "%' . $valor_criterio . '%"';
+                            $statement = $statement . $clausula_where;
+                            break;
+                        case 'cedula':
+                            $clausula_where = ' and p.ci= "' . $valor_criterio . '"';
+                            $statement = $statement . $clausula_where;
+                            break;
+                    }
+
+                    //echo $statement;
                     $conexion = new Conexion();
                     $consulta = $conexion->prepare($statement);
                     $consulta->setFetchMode(PDO::FETCH_ASSOC);
@@ -118,43 +138,40 @@ if (@!$_SESSION['usuario']) {
                     echo '<tr class="warning">';
                     echo '<td>Id usuario</td>';
                     echo '<td>Usuario</td>';
-                    echo '<td>E-mail</td>';
-                    echo '<td>Activo?</td>';
-                    echo '<td>Nombre completo</td>';
-                    echo '<td>Cedula</td>';
+                    echo '<td>tipo</td>';
+                    //echo '<td>Activo?</td>';
+                    //echo '<td>Nombre completo</td>';
+                    //echo '<td>Cedula</td>';
                     echo "</tr>";
 
                     if ($consulta->rowCount() != 0) {
                         while ($row = $consulta->fetch()) {
                             echo '<tr class="success">';
+                            //echo '<td>' . $row['idComentario'] . '</td>';
                             echo '<td>' . $row['idUsuario'] . '</td>';
                             echo '<td>' . $row['usuario'] . '</td>';
-                            echo '<td>' . $row['mail'] . '</td>';
-                            echo '<td>' . $row['activo'] . '</td>';
-                            echo '<td>' . $row['apellidos'] . '  ' . $row['nombres'] . '</td>';
-                            echo '<td>' . $row['ci'] . '</td>';
-                            if ($row['activo'] == 'V') {
-                                echo '<td><a href="adm_buscar_profesores.php?id=' . $row['idUsuario'] . '&id_gestion=1">Desactivar usuario</a></td>';
-                            } else {
-                                echo '<td><a href="adm_buscar_profesores.php?id=' . $row['idUsuario'] . '&id_gestion=2&mail=' . $row['mail'] . '&usuario=' . $row['usuario'] . '&contrasenia=' . $row['contrasenia'] . '">Activar usuario</a></td>';
-                            }
-                            echo "<td><a onClick=\"javascript: return confirm('Realmente desea eliminar el profesor seleccionado? Se eliminarán todos los objetos de aprendizaje asociados al mismo.');\" href='adm_buscar_profesores.php?id=" . $row['idUsuario'] . "&id_gestion=3'><span class='glyphicon glyphicon-remove'></a></td>";
+                            echo '<td>' . $row['tipo_usuario'] . '</td>';
+                            //echo '<td>' . $row['activo'] . '</td>';
+                            //echo '<td>' . $row['apellidos'] . '  ' . $row['nombres'] . '</td>';
+                            //echo '<td>' . $row['ci'] . '</td>';
+                            //if ($row['activo'] == 'V') {
+                                //echo '<td><a href="adm_buscar_profesores.php?id=' . $row['idUsuario'] . '&id_gestion=1">Desactivar usuario</a></td>';
+                            //} else {
+                                //echo '<td><a href="adm_buscar_profesores.php?id=' . $row['idUsuario'] . '&id_gestion=2&mail=' . $row['mail'] . '&usuario=' . $row['usuario'] . '&contrasenia=' . $row['contrasenia'] . '">Activar usuario</a></td>';
+                            //}
+                            //echo "<td><a onClick=\"javascript: return confirm('Realmente desea eliminar el profesor seleccionado? Se eliminarán los objetos de aprendizaje asociados al mismo');\" href='adm_buscar_profesores.php?id=" . $row['idUsuario'] . "&id_gestion=3'><span class='glyphicon glyphicon-remove'></a></td>";
 
-                            echo '</tr>';
+                            //echo '</tr>';
                         }
                     }
                     echo '</table>';
                     $id_gestion = filter_input(INPUT_GET, 'id_gestion');
                     $id = filter_input(INPUT_GET, 'id');
+
                     if ($id_gestion == 1) {
                         act_des_usuario($id, "F");
-                        
-                        $mail = filter_input(INPUT_GET, 'mail');
-                        $user = filter_input(INPUT_GET, 'usuario');
-                        enviar_mail($mail,$user,"");
-                        
                         echo '<script>alert("Usuario desactivado correctamente")</script> ';
-                        echo "<script>location.href='adm_buscar_profesores.php'</script>";
+                        echo "<script>location.href='adm_comentarios_todos.php'</script>";
                     }
                     if ($id_gestion == 2) {
                         $mail = filter_input(INPUT_GET, 'mail');
@@ -163,7 +180,7 @@ if (@!$_SESSION['usuario']) {
                         enviar_mail($mail,$user,$password);
                         act_des_usuario($id, "V");
                         echo '<script>alert("Usuario activado correctamente")</script> ';
-                        echo "<script>location.href='adm_buscar_profesores.php'</script>";
+                        echo "<script>location.href='adm_comentarios_todos.php'</script>";
                     }
                     if ($id_gestion == 3) {
                         eliminar_objetos_aprendizaje_asociados_a_id($id);
@@ -173,7 +190,7 @@ if (@!$_SESSION['usuario']) {
                             echo '<script>alert("El usuario no se ha podido eliminar")</script> ';
                         }
 
-                        echo "<script>location.href='adm_buscar_profesores.php'</script>";
+                        echo "<script>location.href='adm_comentarios_todos.php'</script>";
                     }
 
 
@@ -303,11 +320,12 @@ if (@!$_SESSION['usuario']) {
 
         </script>
         <footer class="label-default container-fluid text-center">
-            <p class="copyright small">Copyright &copy; Alex Ulloa,  Miguel Alvarez, Jossué Dután, Alexis Maldonado 2018</p>
+            <p class="copyright small">Copyright &copy; Jaime Crespin, Jossué Dután, Alexis Maldonado 2018</p>
         </footer>
     </body>
 
 </html>
+
 
 
 

@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (@!$_SESSION['usuario']) {
-    echo "<script>location.href='../../aplicacion/formularios_registro/Login.php'</script>";
+    header("Location:../../index2.php");
 } elseif ($_SESSION['tipo_usuario'] == 'PRO') {
 //header("Location:index2.php");
     echo "ERES PROFESOR";
@@ -71,7 +71,7 @@ if (@!$_SESSION['usuario']) {
 
 
     <body>
-        <?php include './navbar_adm_profesores.php'; ?>
+        <?php include './navbar_adm_comentarios.php'; ?>
         <!-- Inicio formulario de búsqueda -->
 
         <!-- presentacion de objetos de aprendizaje-->
@@ -79,21 +79,22 @@ if (@!$_SESSION['usuario']) {
             <div class="row content">
                 <!-- --------------------------------------------- -->
                 <div class="col-sm-12 text-center"> 
-                    <h2> Administración de profesores</h2>
-                    <form onsubmit="return validar_busqueda_cedula()" action="../modulos_administrador/adm_ejecutar_buscar_profesores.php" method="post" enctype="multipart/form-data">
+                    <h2> Administración de comentarios</h2>
+                    <form onsubmit="return validar_busqueda_cedula()" action="../modulos_administrador/adm_ejecutar_buscar_comentarios.php" method="post" enctype="multipart/form-data">
                         <div class="col-md-3">
 
                         </div>
                         <div class="col-md-3 text-left ">
                             <select class= "form-control" name="tipo_criterio" dir="ltr" required id="select_criterio">
                                 <option value="">Filtrar por:</option>
-                                <option value="nombre">nombre</option>
-                                <option value="usuario">usuario</option>
-                                <option value="cedula">cédula</option>
+                                <!--<option value="nombre">nombre</option>-->
+                               <!-- <option value="usuario">usuario</option>-->
+                               
+                                <!--<option value="cedula">cédula</option>-->
                             </select></br>
                         </div>
                         <div class="col-md-3 text-center">
-                            <input type="text" class="form-control" id="criterio_busqueda" placeholder="Buscar...." name="criterio_busqueda" required></br>
+                           <input type="text" class="form-control" id="criterio_busqueda" placeholder="Buscar...." name="criterio_busqueda" required></br>
                         </div>
                         <div class="col-md-3 text-left">
                             <button id="registrar" type="submit" class="btn btn-danger">Buscar</button>
@@ -105,7 +106,9 @@ if (@!$_SESSION['usuario']) {
                     require_once '../clases_negocio/clase_conexion.php';
                     require '../clases_negocio/funciones_administrador.php';
 
-                    $statement = ("select u.*,p.nombres, p.apellidos, p.ci, p.mail from usuario as u, profesor as p where u.idUsuario=p.id_usuario order by activo");
+                    //$statement = ("select u.*,p.nombres, p.apellidos, p.ci, p.mail from usuario as u, profesor as p where u.idUsuario=p.id_usuario order by activo");
+                    //$statement = ("select * from usuario where idUsuario = ");
+                    $statement = ("select * from experiencia join usuario on (experiencia.idUsuario = usuario.idUsuario)");
                     $conexion = new Conexion();
                     $consulta = $conexion->prepare($statement);
                     $consulta->setFetchMode(PDO::FETCH_ASSOC);
@@ -116,31 +119,46 @@ if (@!$_SESSION['usuario']) {
 
                     echo '<table border ="1|1" class="table table-condensed";>';
                     echo '<tr class="warning">';
-                    echo '<td>Id usuario</td>';
+                    echo '<td>Id comentario</td>';
                     echo '<td>Usuario</td>';
-                    echo '<td>E-mail</td>';
-                    echo '<td>Activo?</td>';
-                    echo '<td>Nombre completo</td>';
-                    echo '<td>Cedula</td>';
+                    echo '<td>Descripción</td>';
+                    echo '<td>Comentario</td>';
+                    echo '<td>Respondido</td>';
+                    echo '<td>Fecha</td>';
+                    //echo '<td>Usuario</td>';
+                    //echo '<td>tipo</td>';
+                    //echo '<td>Activo?</td>';
+                    //echo '<td>Nombre completo</td>';
+                    //echo '<td>Cedula</td>';
                     echo "</tr>";
 
                     if ($consulta->rowCount() != 0) {
                         while ($row = $consulta->fetch()) {
                             echo '<tr class="success">';
-                            echo '<td>' . $row['idUsuario'] . '</td>';
+                            echo '<td>' . $row['idComentario'] . '</td>';
                             echo '<td>' . $row['usuario'] . '</td>';
-                            echo '<td>' . $row['mail'] . '</td>';
-                            echo '<td>' . $row['activo'] . '</td>';
-                            echo '<td>' . $row['apellidos'] . '  ' . $row['nombres'] . '</td>';
-                            echo '<td>' . $row['ci'] . '</td>';
-                            if ($row['activo'] == 'V') {
-                                echo '<td><a href="adm_buscar_profesores.php?id=' . $row['idUsuario'] . '&id_gestion=1">Desactivar usuario</a></td>';
-                            } else {
-                                echo '<td><a href="adm_buscar_profesores.php?id=' . $row['idUsuario'] . '&id_gestion=2&mail=' . $row['mail'] . '&usuario=' . $row['usuario'] . '&contrasenia=' . $row['contrasenia'] . '">Activar usuario</a></td>';
-                            }
-                            echo "<td><a onClick=\"javascript: return confirm('Realmente desea eliminar el profesor seleccionado? Se eliminarán todos los objetos de aprendizaje asociados al mismo.');\" href='adm_buscar_profesores.php?id=" . $row['idUsuario'] . "&id_gestion=3'><span class='glyphicon glyphicon-remove'></a></td>";
+                            echo '<td>' . $row['descripcion'] . '</td>';
+                            echo '<td>' . $row['comentario'] . '</td>';
+                            //echo '<td>' . $row['respondido'] . '</td>';
+                         
+                            if ($row['respondido'] == 'NO'){
+                            echo '<td width=07% height=40 align=center><a href="adm_respuesta_contacto.php" onmouseover="javascript:VentanaFlotante("adm_respuesta_contacto.php",200,30)" onmouseout="javascript: quitarDiv();">NO</a></td>';
+                            }else{
+                                echo '<td>SI</td>';
 
-                            echo '</tr>';
+                            }
+                            echo '<td>' . $row['fecha'] . '</td>';
+                            //echo '<td>' . $row['activo'] . '</td>';
+                            //echo '<td>' . $row['apellidos'] . '  ' . $row['nombres'] . '</td>';
+                            //echo '<td>' . $row['ci'] . '</td>';
+                            //if ($row['comentario'] == ' ') {
+                                //echo '<td>'Enviar correo'</td>'
+                            //} else {
+                                //echo '<td><a href="adm_buscar_profesores.php?id=' . $row['idUsuario'] . '&id_gestion=2&mail=' . $row['mail'] . '&usuario=' . $row['usuario'] . '&contrasenia=' . $row['contrasenia'] . '">Activar usuario</a></td>';
+                            //}
+                            //echo "<td><a onClick=\"javascript: return confirm('Realmente desea eliminar el profesor seleccionado? Se eliminarán todos los objetos de aprendizaje asociados al mismo.');\" href='adm_buscar_profesores.php?id=" . $row['idUsuario'] . "&id_gestion=3'><span class='glyphicon glyphicon-remove'></a></td>";
+
+                            //echo '</tr>';
                         }
                     }
                     echo '</table>';

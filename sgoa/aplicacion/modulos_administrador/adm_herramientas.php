@@ -46,7 +46,9 @@ if (@!$_SESSION['usuario']) {
                         </li>
                         <li><a href="adm_buscar_profesores.php">Gestionar profesores</a></li>
                         <li class="active"><a href="adm_buscar_estudiantes.php">Gestionar Estudiantes</a></li>
+                        <li><a href="adm_comentarios_todos.php">Gestionar comentarios</a></li>
                         <li><a href="adm_herramientas.php">Herramientas</a></li>
+                        
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="../../aplicacion/desconectar_sesion.php"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
