@@ -559,6 +559,21 @@ CREATE TABLE `experiencia` (
   ADD FOREIGN KEY (idUsuario)
   REFERENCES usuario(idUsuario);
 
+CREATE TABLE IF NOT EXISTS `foro` (
+  `idForo` INT AUTO_INCREMENT PRIMARY KEY,
+  `idUsuario` INT NOT NULL,
+  `titulo` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
+  `mensaje` text COLLATE utf8_unicode_ci NOT NULL,
+  `fecha` timestamp DEFAULT CURRENT_TIMESTAMP,
+  `respuestas` int(11) NOT NULL DEFAULT '0',
+  `identificador` int(7) NOT NULL DEFAULT '0',
+  `ult_respuesta` date DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+ALTER TABLE `foro`
+  ADD FOREIGN KEY (idUsuario)
+  REFERENCES usuario(idUsuario);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
