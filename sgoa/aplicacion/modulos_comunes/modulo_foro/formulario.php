@@ -25,7 +25,7 @@
   <input type="hidden" name="idLogin" value="<?php echo $idLogin;?>">
     <tr>
 		<td>Autor </td>
-		<td><input type="text" name="nombre" value="<?php echo $nombre;?>"></td>
+		<td><input type="text" name="nombre" readonly="readonly" value="<?php echo $nombre;?>"></td>
     </tr>
     <tr>
       <td>Titulo</td>
