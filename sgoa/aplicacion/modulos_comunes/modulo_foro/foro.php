@@ -1,7 +1,10 @@
 <?php
 	require '../../clases_negocio/clase_conexion.php';
+	
 	if(isset($_GET["id"]))
 	$id = $_GET['id'];
+	if(isset($_GET["nombre"]))
+	$nombre = $_GET['nombre'];
 	if(isset($_GET["idLogin"]))
 	$idLogin = $_GET['idLogin'];
 
@@ -19,12 +22,12 @@
 		$fecha = $row['fecha'];
 		$respuestas = $row['respuestas'];
 		
-		echo "<tr><td>$titulo</tr></td>";
+		echo "<tr><td> Título:		$titulo</tr></td>";
 		echo "<table>";
 		//echo "<tr><td>autor: $autor</td></tr>";
-		echo "<tr><td>$mensaje</td> </tr>";
+		echo "<tr><td> Mensaje:		$mensaje</td> </tr>";
 		echo "</table>";
-		echo "<br /><br /><a href='formulario.php?id&respuestas=$respuestas&identificador=$id&idLogin=$idLogin'>Responder</a><br/>";
+		echo "<br /><br /><a href='formulario.php?respuestas=$respuestas&identificador=$id&idLogin=$idLogin&nombre=$nombre'>Responder</a><br/>";
 	}
 	
 	$query2 = "SELECT * FROM foro WHERE identificador = '$id' ORDER BY fecha DESC";
@@ -46,6 +49,8 @@
 		//echo "<tr><td>autor: $autor</td></tr>";
 		echo "<tr><td>$mensaje</td></tr>";
 		echo "</table>";
-		echo "<br /><br /><a href='formulario.php?id&respuestas=$respuestas&identificador=$id&idLogin=$idLogin'>Responder</a><br />";
+		echo "<br /><br /><a href='formulario.php?respuestas=$respuestas&identificador=$id&idLogin=$idLogin&nombre=$nombre'>Responder</a><br />";
 	}
+
+	echo "<br /><br /><a href='index.php?nombre=$nombre'>Regresar</a><br />";
 ?>

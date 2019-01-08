@@ -3,17 +3,17 @@
 	
 	if(isset($_POST["submit"])){
 		if(!empty($_POST['mensaje'])){
-			//$autor=$_POST['autor'];
+			$nombre=$_POST['nombre'];
 			$titulo=$_POST['titulo'];
 			$mensaje=$_POST['mensaje'];
 			$respuestas=$_POST['respuestas'];
 			$identificador=$_POST['identificador'];
 			$idLogin=$_POST['idLogin'];
 			$fecha=date("d-m-y");
-		
+			echo "HOLAAAAAA";
 			//Evitamos que el usuario ingrese HTML
 			$mensaje = htmlentities($mensaje);
-			
+			echo "HOLAAAAAA";
 			$conexion=new Conexion();
 			//Grabamos el mensaje en la base de datos.
 			
@@ -24,11 +24,8 @@
 						
 		   	$consulta = $conexion ->prepare($query);
 			 if($consulta->execute()){
-
 			 }
 			 else{
-
-
 			 }
 				
 			 		
@@ -38,16 +35,15 @@
 				$query2 = "UPDATE foro SET respuestas=".($respuestas+1)." WHERE identificador= $identificador ";
 				$consulta = $conexion ->prepare($query2);
 				if($consulta->execute()){
-
 				}
 				else{
    
    
 				}
-				Header("Location: foro.php?id=$identificador&idLogin=$idLogin");
+				Header("Location: foro.php?id=$identificador&idLogin=$idLogin&nombre=$nombre");
 				exit();
 			}
-			Header("Location: index.php");
+			Header("Location: index.php?nombre=$nombre");
 		}
 	}
 ?>

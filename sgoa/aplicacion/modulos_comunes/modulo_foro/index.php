@@ -7,16 +7,25 @@
 		<td width="100px"></td>
 	</tr>
 <?php 
-	if(isset($_GET["idLogin"]))
-	$idLogin = $_GET['idLogin'];
-	else $idLogin = 10;
+	
+	require '../../clases_negocio/clase_conexion.php';
 
-	if(isset($_GET["nomnbre"]))
+	if(isset($_GET["nombre"]))
 	$nombre = $_GET['nombre'];
 	else $nombre = 'CB';
 
+	
+	$conexion = new Conexion();
+	$statement = "select idUsuario from usuario where usuario = '".$nombre."' ";
+	$consulta = $conexion->prepare($statement);
+	$consulta->setFetchMode(PDO::FETCH_ASSOC);
+	$consulta->execute();
 
-	require '../../clases_negocio/clase_conexion.php';
+	while($row = $consulta->fetch()){
+		$idLogin = $row['idUsuario'];
+	}
+
+	
 	$conexion = new Conexion();
 	$query = "SELECT * FROM foro join usuario on(foro.idUsuario=usuario.idUsuario) WHERE foro.identificador = 0 ORDER BY fecha DESC";
     $consulta = $conexion->prepare($query);
@@ -34,7 +43,7 @@
 			echo "<td>$titulo</td>";
 			echo "<td>".date("d-m-y,$fecha")."</td>";
 			echo "<td>$respuestas</td>";
-			echo "<td><a href= foro.php?id=".$id."&idLogin=".$idLogin.">Revisar tema</a></td>";
+			echo "<td><a href= foro.php?id=".$id."&idLogin=".$idLogin."&nombre=".$nombre.">Revisar tema</a></td>";
 		echo "</tr>";
 	}
 ?>
