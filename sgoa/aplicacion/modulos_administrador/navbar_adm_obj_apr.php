@@ -22,6 +22,7 @@
                 <li><a href="adm_buscar_estudiantes.php">Gestionar Estudiantes</a></li>
                 <li><a href="adm_comentarios_todos.php">Gestionar comentarios</a></li>
                 <li><a href="adm_herramientas.php">Herramientas</a></li>
+                <?php echo "<li><a href=\"../modulos_comunes/modulo_foro/index.php?nombre=".$_SESSION['usuario']."\">Foro</a></li>";?>
                 
             </ul>
             <ul class="nav navbar-nav navbar-right">

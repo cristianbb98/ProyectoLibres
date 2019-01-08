@@ -95,6 +95,7 @@ if (@!$_SESSION['usuario']) {
                 <li><a href="../modulos_profesor/pro_importar_catalogar.php">Importar y catalogar</a></li>
                 <li class="active"><a href="../modulos_profesor/pro_buscar.php">Buscar</a></li>
                 <li><a href="../modulos_profesor/pro_herramientas.php">Herramientas</a></li>
+                <li><a href="../modulos_comunes/foro.php">Foro</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="../desconectar_sesion.php"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>

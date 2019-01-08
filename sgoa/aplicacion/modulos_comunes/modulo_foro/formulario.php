@@ -25,7 +25,7 @@
   <input type="hidden" name="idLogin" value="<?php echo $idLogin;?>">
     <tr>
 		<td>Autor </td>
-		<td><input type="text" name="autor" value="<?php echo $nombre;?>"></td>
+		<td><input type="text" name="nombre" readonly="readonly" value="<?php echo $nombre;?>"></td>
     </tr>
     <tr>
       <td>Titulo</td>
@@ -38,5 +38,8 @@
     <tr>
       <td><input type="submit" id="submit" name="submit" value="Enviar Mensaje"></td>
     </tr>
-  </form>
+    </form>
+    
+    <td><a href='index.php?nombre=<?php echo $nombre;?>'>Regresar</a></td>
+    
 </table>
