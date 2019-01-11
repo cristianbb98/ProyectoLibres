@@ -8,13 +8,14 @@ if (@!$_SESSION['usuario']) {
 } elseif ($_SESSION['tipo_usuario'] == 'ADM') {
 }
 
-	if(isset($_GET["respuestas"]))
-		$respuestas = $_GET['respuestas'];
-
-	if(isset($_GET["identificador"]))
-		$identificador = $_GET['identificador'];
-	
-
+if(isset($_GET["respuestas"]))
+$respuestas = $_GET['respuestas'];
+else
+$respuestas = 0;
+if(isset($_GET["identificador"]))
+$identificador = $_GET['identificador'];
+else
+$identificador = 0;
     $idLogin = $_SESSION['id'];
     $nombre = $_SESSION['usuario'];
     

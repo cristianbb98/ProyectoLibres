@@ -18,6 +18,9 @@ if (!empty($_FILES["archivo"]["name"])){
 	$direccion_temporal = $_FILES['archivo']['tmp_name'];
 	$direccion_servidor="imagenes/" . $_FILES['archivo']['name'];
 	move_uploaded_file($_FILES['archivo']['tmp_name'],$direccion_servidor);
+}else{
+	$direccion_servidor = "";
+
 }
 
 
@@ -48,7 +51,7 @@ require '../../clases_negocio/clase_conexion.php';
 			if ((int)$identificador != 0)
 			{
 				
-				$query2 = "UPDATE foro SET respuestas=".($respuestas+1)." WHERE identificador=".$identificador;
+				$query2 = "UPDATE foro SET respuestas=".($respuestas+1)." WHERE idForo=".$identificador;
 				$consulta = $conexion ->prepare($query2);
 				if($consulta->execute()){
 				}

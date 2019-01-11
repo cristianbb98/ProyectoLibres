@@ -242,7 +242,6 @@ if (@!$_SESSION['usuario']) {
 	if(isset($_GET["id"]))
 	$id = $_GET['id'];
     
-    echo $id;
 	$idLogin = $_SESSION['id'];
 	$nombre = $_SESSION['usuario'];
 
@@ -268,7 +267,7 @@ if (@!$_SESSION['usuario']) {
                      <th> Titulo</th><td>".$titulo."</td></tr>
                      <tr  class=\"success\"><th> Mensaje</th><td>".$mensaje."</td></tr>";
         if ($imagen!=''){
-            echo "<tr  class=\"warning\"><th> Imagen </th><td><img src=\"$imagen\"</td></tr>";
+            echo "<tr  class=\"warning\"><th> Imagen </th><td><img src=\"$imagen\" width=\"500\" height=\"200\"></td></tr>";
             }
         echo "<tr ><th></th><td class=\"danger\"><a href=formulario.php?respuestas=".$respuestas.".&identificador=".$id.">RESPONDER</a></td></tr>
                      </thead>
@@ -304,9 +303,7 @@ if (@!$_SESSION['usuario']) {
                 <tr  class=\"warning\"><th> Mensaje</th><td>".$mensaje."</td></tr>
                 <tr  class=\"warning\"><th> Autor</th><td>".$autor."</td></tr>
                 <tr  class=\"warning\"><th> Fecha</th><td>".$fecha."</td></tr>";
-            
-               
-              echo "<tr><th></th><td class=\"danger\"><a href=formulario.php?respuestas=".$respuestas.".&identificador=".$id.">RESPONDER</a></td></tr>";
+             // echo "<tr><th></th><td class=\"danger\"><a href=formulario.php?respuestas=".$respuestas.".&identificador=".$id.">RESPONDER</a></td></tr>";
 		    echo "</table>";
 	}
 
@@ -314,5 +311,5 @@ if (@!$_SESSION['usuario']) {
 ?>
 
 
-				</body>
-				</html>
+</body>
+</html>

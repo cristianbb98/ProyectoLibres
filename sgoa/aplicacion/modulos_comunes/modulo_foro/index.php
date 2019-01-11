@@ -265,10 +265,6 @@ if (@!$_SESSION['usuario']) {
 	
 	require '../../clases_negocio/clase_conexion.php';
 
-	if(isset($_GET["nombre"]))
-	$nombre = $_GET['nombre'];
-	else $nombre = 'CB';
-
 	$idLogin = $_SESSION['id'];
 	$nombre = $_SESSION['usuario'];
 
