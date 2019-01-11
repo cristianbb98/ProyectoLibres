@@ -166,7 +166,7 @@ if (@!$_SESSION['usuario']) {
             <ul class="nav navbar-nav">
                 <li><a href="../modulos_profesor/pro_importar_catalogar.php">Importar y catalogar</a></li>
                 <li><a href="../modulos_profesor/pro_herramientas.php">Herramientas</a></li>
-                <li class="active"><a href="../modulos_comunes/index.php?<?php echo $_SESSION['usuario'] ?>">Foro</a></li>
+                <li class="active"><a href=index.php>Foro</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="../desconectar_sesion.php"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
@@ -189,10 +189,8 @@ if (@!$_SESSION['usuario']) {
 
             </form>
 
-            <div class="container" >
-                <table class="table table-striped" border ="1|1" class="table table-bordered" id="tabla">
-                    <thead>
-                    <tr class="warning">
+            
+                
                         
 
 <?php
@@ -205,55 +203,70 @@ if (@!$_SESSION['usuario']) {
 	$nombre = $_SESSION['usuario'];
 
 	$conexion = new Conexion();
-	$query = "SELECT * FROM  foro WHERE idForo = '$id' ORDER BY fecha DESC";
+	$query = "SELECT * FROM  foro join usuario on (foro.idUsuario=usuario.idUsuario) WHERE idForo = '$id' ORDER BY fecha DESC";
     $consulta = $conexion->prepare($query);
 	$consulta->setFetchMode(PDO::FETCH_ASSOC);
-	$consulta->execute();
+    $consulta->execute();
+
+    echo "  <div class=\"container\">";
 	
 	while($row = $consulta->fetch()){
 		$id = $row['idForo'];
 		$titulo = $row['titulo'];
 		$mensaje = $row['mensaje'];
 		$fecha = $row['fecha'];
-		$respuestas = $row['respuestas'];
+        $respuestas = $row['respuestas'];
+        $imagen = $row['imagen'];
 			
-		echo "<tr><th> Titulo</th><td>".$titulo."</td></tr>";
-		echo "<tr><td> Mensaje</td><td>".$mensaje."</td></tr>";
-		echo "<tr><a href='formulario.php?respuestas=".$respuestas."&identificador=".$id.">Responder</a><td></td><td></td></tr>";
-		
-	}
-
-	/*<td>Usuario</td>
-                        <td>Titulo</td>
-                        <td>Fecha</td>
-                        <td>Número de respuestas</td>
-					</tr>
-					</thead>
-            </div>*/
+        echo " <table class=\"table table-striped\" border =\"1|1\" class=\"table table-bordered\" id=\"tabla\">
+                    <thead>
+                    <tr class=\"success\">
+                     <th> Titulo</th><td>".$titulo."</td></tr>
+                     <tr  class=\"success\"><th> Mensaje</th><td>".$mensaje."</td></tr>";
+        if ($imagen!=''){
+            echo "<tr  class=\"warning\"><th> Imagen </th><td><img src=\"$imagen\"</td></tr>";
+            }
+        echo "<tr ><th></th><td class=\"danger\"><a href=formulario.php?respuestas=".$respuestas.".&identificador=".$id.">RESPONDER</a></td></tr>
+                     </thead>
+                     </table>";
+        }
+         echo "</div>";
 	
-	$query2 = "SELECT * FROM foro WHERE identificador = '$id' ORDER BY fecha DESC";
+	$query2 = "SELECT * FROM foro join usuario on (foro.idUsuario=usuario.idUsuario) WHERE identificador = '$id' ORDER BY fecha DESC";
 	$consulta = $conexion->prepare($query2);
 	//$consulta->setFetchMode(PDO::FETCH_ASSO);
 	$consulta->execute();
 
-	echo "<br />respuestas:<br /><br />";
+	echo "<table class=\"table table-striped\" border =\"1|1\" class=\"table table-bordered\" id=\"tabla\">
+            <thead>
+            <tr class=\"success\"><br><H3>RESPUESTAS</H3><br><br></tr>
+            </thead>
+            </table>
+            
+            <div class=\"container\" >
+            ";
+
 	while($row = $consulta->fetch()){
-		$id = $row['idForo'];
+        $id = $row['idForo'];
+        $autor = $row['usuario'];
 		$titulo = $row['titulo'];
-		//$autor = $row['autor'];
 		$mensaje = $row['mensaje'];
 		$fecha = $row['fecha'];
-		$respuestas = $row['respuestas'];
-		
-		echo "<tr><td>$titulo</tr></td>";
-		echo "<table>";
-		//echo "<tr><td>autor: $autor</td></tr>";
-		echo "<tr><td>$mensaje</td></tr>";
-		echo "</table>";
-		echo "<br /><br /><a href='formulario.php?respuestas=$respuestas&identificador=$id&idLogin=$idLogin&nombre=$nombre'>Responder</a><br />";
+        $respuestas = $row['respuestas'];
+       
+        echo "<table class=\"table table-striped\" border =\"1|1\" class=\"table table-bordered\" id=\"tabla\">
+                <thead>
+                <tr  class=\"warning\"><th> Titulo</th><td>".$titulo."</td></tr>
+                <tr  class=\"warning\"><th> Mensaje</th><td>".$mensaje."</td></tr>
+                <tr  class=\"warning\"><th> Autor</th><td>".$autor."</td></tr>
+                <tr  class=\"warning\"><th> Fecha</th><td>".$fecha."</td></tr>";
+            
+               
+              echo "<tr><th></th><td class=\"danger\"><a href=formulario.php?respuestas=".$respuestas.".&identificador=".$id.">RESPONDER</a></td></tr>";
+		    echo "</table>";
 	}
 
-	echo "<br /><br /><a href='index.php?nombre=$nombre'>Regresar</a><br />";
+	echo "<td><button onclick=\"location.href='index.php'\">REGRESAR</td>";
 ?>
 
 

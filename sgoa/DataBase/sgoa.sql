@@ -1,5 +1,7 @@
 -- phpMyAdmin SQL Dump
 -- version 4.8.0.1
+-- phpMyAdmin SQL Dump
+-- version 4.8.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
@@ -118,7 +120,11 @@ CREATE TABLE `estudiante` (
   `carrera` varchar(45) DEFAULT NULL,
   `id_facultad` int(11) DEFAULT NULL,
   `mail` varchar(45) DEFAULT NULL,
-  `id_usuario` int(11) DEFAULT NULL
+  `id_usuario` int(11) DEFAULT NULL,
+  `fecha_nacimiento` varchar(45) DEFAULT NULL,
+  `genero` varchar(1) DEFAULT NULL,
+  `domicilio` varchar(60) DEFAULT NULL,
+  `telefonos` varchar(25) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -306,7 +312,11 @@ CREATE TABLE `profesor` (
   `id_departamento` int(11) DEFAULT NULL,
   `id_facultad` int(11) DEFAULT NULL,
   `mail` varchar(45) DEFAULT NULL,
-  `id_usuario` int(11) DEFAULT NULL
+  `id_usuario` int(11) DEFAULT NULL,
+  `fecha_nacimiento` varchar(45) DEFAULT NULL,
+  `genero` varchar(1) DEFAULT NULL,
+  `domicilio` varchar(60) DEFAULT NULL,
+  `telefonos` varchar(25) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -329,7 +339,8 @@ CREATE TABLE `usuario` (
   `usuario` varchar(45) DEFAULT NULL,
   `contrasenia` varchar(45) DEFAULT NULL,
   `tipo_usuario` varchar(3) DEFAULT NULL,
-  `activo` varchar(1) DEFAULT NULL
+  `activo` varchar(1) DEFAULT NULL,
+  `foto` varchar(45) DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -370,10 +381,6 @@ INSERT INTO `valoracion` (`idvaloracion`, `idobjeto_aprendizaje`, `idusuario`, `
 (5, 12, 2, 4),
 (6, 12, 2, 1),
 (7, 12, 4, 1);
-
---
--- Índices para tablas volcadas
---
 
 --
 -- Indices de la tabla `catalogooa`
@@ -567,12 +574,29 @@ CREATE TABLE IF NOT EXISTS `foro` (
   `fecha` timestamp DEFAULT CURRENT_TIMESTAMP,
   `respuestas` int(11) NOT NULL DEFAULT '0',
   `identificador` int(7) NOT NULL DEFAULT '0',
-  `ult_respuesta` date DEFAULT NULL
+  `ult_respuesta` date DEFAULT NULL, 
+  `imagen` varchar(45) DEFAULT ''
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 ALTER TABLE `foro`
   ADD FOREIGN KEY (idUsuario)
   REFERENCES usuario(idUsuario);
+
+--
+-- Estructura de tabla para la tabla `colaborador`
+--
+
+CREATE TABLE IF NOT EXISTS `colaborador` (
+  `idColaborador` int(11) AUTO_INCREMENT PRIMARY KEY,
+  `idUsuario` int(11) NOT NULL,
+   `colaboraciones` int(11) DEFAULT 0 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `colaborador`
+  ADD FOREIGN KEY (idUsuario)
+  REFERENCES usuario(idUsuario);
+
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

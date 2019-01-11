@@ -1,38 +1,54 @@
 <?php
-	require '../../clases_negocio/clase_conexion.php';
 	
+session_start();
+	if (@!$_SESSION['usuario']) {
+   		header("Location:../../index.php");
+		} elseif ($_SESSION['tipo_usuario'] == 'EST') {
+	} elseif ($_SESSION['tipo_usuario'] == 'ADM') {
+		
+}	
+
+$idLogin=$_SESSION['id'];
+$nombre=$_SESSION['usuario'];
+
+if (!empty($_FILES["archivo"]["name"])){
+	$nombre_archivo = $_FILES['archivo']['name'];
+	$tipo_archivo= $_FILES['archivo']['type'];
+	$tamano_archivo = $_FILES["archivo"]['size'];
+	$direccion_temporal = $_FILES['archivo']['tmp_name'];
+	$direccion_servidor="imagenes/" . $_FILES['archivo']['name'];
+	move_uploaded_file($_FILES['archivo']['tmp_name'],$direccion_servidor);
+}
+
+
+require '../../clases_negocio/clase_conexion.php';
+
 	if(isset($_POST["submit"])){
 		if(!empty($_POST['mensaje'])){
-			$nombre=$_POST['nombre'];
 			$titulo=$_POST['titulo'];
 			$mensaje=$_POST['mensaje'];
 			$respuestas=$_POST['respuestas'];
 			$identificador=$_POST['identificador'];
-			$idLogin=$_POST['idLogin'];
 			$fecha=date("d-m-y");
-			echo "HOLAAAAAA";
 			//Evitamos que el usuario ingrese HTML
 			$mensaje = htmlentities($mensaje);
-			echo "HOLAAAAAA";
 			$conexion=new Conexion();
 			//Grabamos el mensaje en la base de datos.
 			
-			$query = "	INSERT INTO foro (idUsuario, titulo, mensaje, identificador) 
-						VALUES ('$idLogin', '$titulo', '$mensaje', $identificador)	";
+			$query = "	INSERT INTO foro (idUsuario, titulo, mensaje, identificador, imagen) 
+						VALUES ('$idLogin', '$titulo', '$mensaje', $identificador, '$direccion_servidor')";
 			
 			echo $query;
 						
 		   	$consulta = $conexion ->prepare($query);
-			 if($consulta->execute()){
-			 }
-			 else{
-			 }
-				
+			$consulta->execute();
+			 				
 			 		
 			/* si es un mensaje en respuesta a otro actualizamos los datos */
 			if ((int)$identificador != 0)
 			{
-				$query2 = "UPDATE foro SET respuestas=".($respuestas+1)." WHERE identificador= $identificador ";
+				
+				$query2 = "UPDATE foro SET respuestas=".($respuestas+1)." WHERE identificador=".$identificador;
 				$consulta = $conexion ->prepare($query2);
 				if($consulta->execute()){
 				}
@@ -40,10 +56,11 @@
    
    
 				}
-				Header("Location: foro.php?id=$identificador&idLogin=$idLogin&nombre=$nombre");
+				Header("Location: foro.php");
 				exit();
 			}
-			Header("Location: index.php?nombre=$nombre");
+			Header("Location: index.php");
+			echo "<script charset=\"UTF-8\">alert(\"Comentario ingresado exitosamente\")</script>";
 		}
 	}
 ?>

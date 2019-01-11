@@ -5,9 +5,7 @@ if (@!$_SESSION['usuario']) {
     header("Location:../../index.php");
 } elseif ($_SESSION['tipo_usuario'] == 'EST') {
 //header("Location:index2.php");
-    echo "eres estudiante";
 } elseif ($_SESSION['tipo_usuario'] == 'ADM') {
-    echo "eres administrador";
 }
 
 	if(isset($_GET["respuestas"]))
@@ -110,7 +108,7 @@ if (@!$_SESSION['usuario']) {
             <ul class="nav navbar-nav">
                 <li><a href="../../modulos_profesor/pro_importar_catalogar.php">Importar y catalogar</a></li>
                 <li><a href="../../modulos_profesor/pro_herramientas.php">Herramientas</a></li>
-                <li class="active"><a href="../../modulos_comunes/index.php?<?php echo $_SESSION['usuario']?>">Foro</a></li>
+                <li class="active"><a href="index.php">Foro</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="../../desconectar_sesion.php"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
@@ -122,33 +120,45 @@ if (@!$_SESSION['usuario']) {
 
 <div class="container-fluid text-center">
     <div class="row content">
-       
-      <table>
-<form name="form" action="agregar.php" method="post">
-	<input type="hidden" name="identificador" value="<?php echo $identificador;?>">
+    <div class="col-md-3 text-center">
+                    <!--<input type="text" class="form-control" id="criterio_busqueda" placeholder="Buscar...." name="criterio_busqueda" required></br>-->
+                </div>
+                <div class="col-md-3 text-left">
+                    <br><br>
+                </div>
+                <div class="container">
+
+<table class="table table-striped" border ="1|1" class="table table-bordered" id="tabla">
+<thead>
+<form name="form" action="agregar.php" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="identificador" value="<?php echo $identificador;?>">
 	<input type="hidden" name="respuestas" value="<?php echo $respuestas;?>">
-  <input type="hidden" name="idLogin" value="<?php echo $idLogin;?>">
-    <tr>
-		<td>Autor </td>
-		<td><input type="text" name="nombre" readonly="readonly" value="<?php echo $nombre;?>"></td>
+    <tr class="success">
+		<th>Autor </th>
+		<td><?php echo $nombre?></td>
     </tr>
-    <tr>
-      <td>Titulo</td>
-      <td><input type="text" name="titulo"></td>
+    <tr class="success">
+      <th>Titulo</th>
+      <td><input type="text" name="titulo" cols="50" rows="5" required="required"></td>
     </tr>
-    <tr>
-      <td>Mensaje</td>
+    <tr class="success">
+      <th>Mensaje</th>
       <td><textarea name="mensaje" cols="50" rows="5" required="required"></textarea></td>
     </tr>
-    <tr>
-      <td><input type="submit" id="submit" name="submit" value="Enviar Mensaje"></td>
+    <tr class="success">
+    <th>Foto</th>
+    <td>
+    <input type="file" name="archivo" id="archivo">
+         </td>
+    <tr class="warning">
+      <td></td><td><input type="submit" id="submit" name="submit" value="Enviar Mensaje"></td>
     </tr>
     </form>
     
-    <td><a href='index.php'>Regresar</a></td>
-    
+    </thead>
 </table>
 </div>
       </div>
+      <td><button onclick="location.href='index.php'">REGRESAR</td>
 </body>
 </html>

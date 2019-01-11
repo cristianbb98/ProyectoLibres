@@ -85,7 +85,7 @@ if (@!$_SESSION['usuario']) {
                             <a href="../modulos_administrador/adm_buscar.php">Volver</a>
                         </div>
                         <div class="col-md-3 text-left ">
-                            <select class= "form-control" name="tipo_criterio" dir="ltr" required>
+                        <select class= "form-control" name="tipo_criterio" dir="ltr" required>
                                 <option value="">Filtrar por:</option>
                                 <option value="autor">autor</option>
                                 <option value="nombre">nombre</option>

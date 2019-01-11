@@ -5,9 +5,7 @@ if (@!$_SESSION['usuario']) {
     header("Location:../../index.php");
 } elseif ($_SESSION['tipo_usuario'] == 'EST') {
 //header("Location:index2.php");
-    echo "eres estudiante";
 } elseif ($_SESSION['tipo_usuario'] == 'ADM') {
-    echo "eres administrador";
 }
    
     
@@ -167,12 +165,12 @@ if (@!$_SESSION['usuario']) {
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li><a href="../modulos_profesor/pro_importar_catalogar.php">Importar y catalogar</a></li>
-                <li><a href="../modulos_profesor/pro_herramientas.php">Herramientas</a></li>
-                <li class="active"><a href="../modulos_comunes/index.php?<?php echo $_SESSION['usuario'] ?>">Foro</a></li>
+                <li><a href="../../modulos_profesor/pro_importar_catalogar.php">Importar y catalogar</a></li>
+                <li><a href="../../modulos_profesor/pro_herramientas.php">Herramientas</a></li>
+                <li class="active"><a href="index.php">Foro</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="../desconectar_sesion.php"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
+                <li><a href="../../desconectar_sesion.php"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
             </ul>
         </div>
     </div>
@@ -182,18 +180,32 @@ if (@!$_SESSION['usuario']) {
 <!-- presentacion de objetos de aprendizaje-->
 <div class="container-fluid text-center">
     <div class="row content">
-        <!-- --------------------------------------------- -->
-                <div class="col-md-3 text-center">
+    <div class="col-sm-12 text-center"> 
+                    <h2>FORO DE COMENTARIOS</h2>
+            <form action="index.php" method="post" enctype="multipart/form-data">
+                    <div class="col-md-3">
+                        </div>            
+                        <div class="col-md-3 text-left ">
+                            <select class= "form-control" name="tipo_criterio" dir="ltr" required>
+                                <option value="">Filtrar por:</option>
+                                <option value="autor">Autor</option>
+                                <option value="titulo">Título</option>
+                            </select><br>
+                        </div>
                     <!--<input type="text" class="form-control" id="criterio_busqueda" placeholder="Buscar...." name="criterio_busqueda" required></br>-->
-                </div>
-                <div class="col-md-3 text-left">
+               
+                    <div class="col-md-3 text-center">
+                            <input type="text" class="form-control" id="criterio_busqueda" placeholder="Buscar...." name="criterio_busqueda" required></br>
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <button id="registrar" type="submit" class="btn btn-danger">Buscar</button>
                     <br><br>
                 </div>
 
             </form>
 
             <div class="container" >
-                <table class="table table-striped" border ="1|1" class="table table-bordered" id="tabla">
+                <table class="table table-striped" border="1|1" class="table table-bordered" id="tabla">
                     <thead>
                     <tr class="warning">
                         <td>Usuario</td>
@@ -214,23 +226,26 @@ if (@!$_SESSION['usuario']) {
 	$idLogin = $_SESSION['id'];
 	$nombre = $_SESSION['usuario'];
 
-	
-
-	
-	/*$conexion = new Conexion();
-	$statement = "select idUsuario from usuario where usuario = '".$nombre."' ";
-	$consulta = $conexion->prepare($statement);
-	$consulta->setFetchMode(PDO::FETCH_ASSOC);
-	$consulta->execute();
-
-	while($row = $consulta->fetch()){
-		$idLogin = $row['idUsuario'];
-	}*/
-
-
 	$conexion = new Conexion();
-	$query = "SELECT * FROM foro join usuario on(foro.idUsuario=usuario.idUsuario) WHERE foro.identificador = 0 ORDER BY fecha DESC";
-    $consulta = $conexion->prepare($query);
+    $statement = "SELECT * FROM foro JOIN usuario ON (foro.idUsuario=usuario.idUsuario) WHERE foro.identificador = 0";
+    
+    $criterio = filter_input(INPUT_POST, 'tipo_criterio');
+    $valor_criterio = filter_input(INPUT_POST, 'criterio_busqueda');
+    
+    $clausula_where = " ";
+        switch ($criterio) {
+            case 'autor':
+                $clausula_where = ' and usuario like "%' . $valor_criterio . '%" order by usuario';
+                $statement = $statement . $clausula_where;
+                break;
+            case 'titulo':
+                $clausula_where = ' and titulo like "%' . $valor_criterio . '%" order by titulo';
+                $statement = $statement . $clausula_where;
+                
+                break;
+        }
+    
+    $consulta = $conexion->prepare($statement);
 	$consulta->setFetchMode(PDO::FETCH_ASSOC);
 	$consulta->execute();
 
@@ -252,7 +267,7 @@ if (@!$_SESSION['usuario']) {
 </table>
 <br>
 <br>
-<?php echo "<a href=formulario.php> INSERTAR UN NUEVO TEMA </a>";?>
+<?php echo "<button onclick=\"location.href='formulario.php'\">INSERTAR NUEVO TEMA</td>";?>
 
 </body>
 </html>
