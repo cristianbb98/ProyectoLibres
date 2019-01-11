@@ -56,7 +56,7 @@ require '../../clases_negocio/clase_conexion.php';
    
    
 				}
-				Header("Location: foro.php");
+				Header("Location: foro.php?id=$identificador");
 				exit();
 			}
 			Header("Location: index.php");

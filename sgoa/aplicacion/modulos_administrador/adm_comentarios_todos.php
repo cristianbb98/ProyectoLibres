@@ -4,9 +4,7 @@ if (@!$_SESSION['usuario']) {
     header("Location:../../index2.php");
 } elseif ($_SESSION['tipo_usuario'] == 'PRO') {
 //header("Location:index2.php");
-    echo "ERES PROFESOR";
 } elseif ($_SESSION['tipo_usuario'] == 'EST') {
-    echo "ERES ESTUDIANTE";
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
