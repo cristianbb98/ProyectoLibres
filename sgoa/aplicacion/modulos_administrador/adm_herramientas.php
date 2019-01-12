@@ -4,9 +4,7 @@ if (@!$_SESSION['usuario']) {
     echo "<script>location.href='../../aplicacion/formularios_registro/Login.php'</script>";
 } elseif ($_SESSION['tipo_usuario'] == 'EST') {
     //header("Location:index2.php");
-    echo "eres estudiante";
 } elseif ($_SESSION['tipo_usuario'] == 'ADM') {
-    echo "eres estudiante";
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -47,6 +45,14 @@ if (@!$_SESSION['usuario']) {
                         <li><a href="adm_buscar_profesores.php">Gestionar profesores</a></li>
                         <li><a href="adm_buscar_estudiantes.php">Gestionar Estudiantes</a></li>
                         <li><a href="adm_comentarios_todos.php">Gestionar comentarios</a></li>
+                        <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestión de colaboradores
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../modulos_comunes/modulo_colaboradores/buscar_colaborador.php">Buscar</a></li>
+                        <li><a href="../modulos_comunes/modulo_colaboradores/eliminar_colaborador.php">Eliminar</a></li>
+                    </ul>
+                </li>
                         <li class="active"><a href="adm_herramientas.php">Herramientas</a></li>
                         <?php echo "<li><a href=\"../modulos_comunes/modulo_foro/index.php?nombre=".$_SESSION['usuario']."\">Foro</a></li>";?>
                         

@@ -116,7 +116,15 @@ $identificador = 0;
                 </li>
                 <li><a href="../../modulos_administrador/adm_buscar_profesores.php">Gestionar Profesores</a></li>
                 <li ><a href="../../modulos_administrador/adm_buscar_estudiantes.php">Gestionar Estudiantes</a></li>
-                <li ><a href="adm_comentarios_todos.php">Gestionar comentarios</a></li>
+                <li ><a href="../../modulos_administrador/adm_comentarios_todos.php">Gestionar comentarios</a></li>
+                <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestión de colaboradores
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="../modulos_comunes/modulo_colaboradores/buscar_colaborador.php">Buscar</a></li>
+                    <li><a href="../modulos_comunes/modulo_colaboradores/eliminar_colaborador.php">Eliminar</a></li>
+                </ul>
+            </li>
                 <li><a href="../../modulos_administrador/adm_herramientas.php">Herramientas</a></li>
                 <li class="active"><a href="index.php">Foro</a></li>">
                 

@@ -123,9 +123,11 @@ CREATE TABLE `estudiante` (
   `id_usuario` int(11) DEFAULT NULL,
   `fecha_nacimiento` varchar(45) DEFAULT NULL,
   `genero` varchar(1) DEFAULT NULL,
+   `ciudad` varchar(10) DEFAULT NULL,
   `domicilio` varchar(60) DEFAULT NULL,
-  `telefonos` varchar(25) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `celular` varchar(15) DEFAULT NULL,
+  `convencional` varchar(15) DEFAULT NULL
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `estudiante`
@@ -315,8 +317,10 @@ CREATE TABLE `profesor` (
   `id_usuario` int(11) DEFAULT NULL,
   `fecha_nacimiento` varchar(45) DEFAULT NULL,
   `genero` varchar(1) DEFAULT NULL,
+  `ciudad` varchar(10) DEFAULT NULL,
   `domicilio` varchar(60) DEFAULT NULL,
-  `telefonos` varchar(25) DEFAULT NULL
+  `celular` varchar(15) DEFAULT NULL,
+  `convencional` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -589,7 +593,8 @@ ALTER TABLE `foro`
 CREATE TABLE IF NOT EXISTS `colaborador` (
   `idColaborador` int(11) AUTO_INCREMENT PRIMARY KEY,
   `idUsuario` int(11) NOT NULL,
-   `colaboraciones` int(11) DEFAULT 0 
+  `activo` varchar(1) DEFAULT 'T',
+  `colaboraciones` int(11) DEFAULT 0 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `colaborador`

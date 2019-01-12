@@ -21,8 +21,16 @@
                 <li class="active"><a href="adm_buscar_profesores.php">Gestionar Profesores</a></li>
                 <li ><a href="adm_buscar_estudiantes.php">Gestionar Estudiantes</a></li>
                 <li><a href="adm_comentarios_todos.php">Gestionar comentarios</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestión de colaboradores
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../modulos_comunes/modulo_colaboradores/buscar_colaborador.php">Buscar</a></li>
+                        <li><a href="../modulos_comunes/modulo_colaboradores/eliminar_colaborador.php">Eliminar</a></li>
+                    </ul>
+                </li>
                 <li><a href="adm_herramientas.php">Herramientas</a></li>
-                <?php echo "<li><a href=\"../modulos_comunes/modulo_foro/index.php?nombre=".$_SESSION['usuario']."\">Foro</a></li>";?>
+               <li><a href="../modulos_comunes/modulo_foro/index.php">Foro</a></li>
                 
             </ul>
             <ul class="nav navbar-nav navbar-right">

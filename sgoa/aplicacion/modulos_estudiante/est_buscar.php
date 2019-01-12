@@ -4,9 +4,7 @@ if (@!$_SESSION['usuario']) {
     header("Location:../../index.php");
 } elseif ($_SESSION['tipo_usuario'] == 'EST') {
 //header("Location:index2.php");
-    echo "eres estudiante";
 } elseif ($_SESSION['tipo_usuario'] == 'ADM') {
-    echo "eres administrador";
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -94,8 +92,18 @@ if (@!$_SESSION['usuario']) {
             <ul class="nav navbar-nav">
                 <li><a href="../modulos_profesor/pro_importar_catalogar.php">Importar y catalogar</a></li>
                 <li class="active"><a href="../modulos_profesor/pro_buscar.php">Buscar</a></li>
-                <li><a href="../modulos_profesor/pro_herramientas.php">Herramientas</a></li>
-                <li><a href="../modulos_comunes/foro.php">Foro</a></li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Colaboradores
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../modulos_comunes/modulo_colaboradores/buscar_colaborador.php">Buscar</a></li>
+                        <li><a href="../modulos_comunes/modulo_colaboradores/registrar.php">Registrarse</a></li>
+                        <li><a href="../modulos_comunes/modulo_colaboradores/perfil_colaborador.php">Perfil</a></li>
+                        <li><a href="../modulos_comunes/modulo_colaboradores/actualizar_datos_colaborador.php">Actualizar datos</a></li>
+                    </ul>
+                </li>
+                <li class="active"><a href="../modulos_estudiante/est_herramientas.php">Herramientas</a></li>
+                                <li><a href="../modulos_comunes/modulo_foro/index.php">Foro</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="../desconectar_sesion.php"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
