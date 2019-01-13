@@ -46,6 +46,33 @@ if ($seGuardo_db == 1) {
     } else {
         if (move_uploaded_file($_FILES["o_aprendizaje"]["tmp_name"], $target_file)) {
             $seGuardo_sto = 1;
+            $conexion = new Conexion();
+
+            $statement = "SELECT * FROM colaborador WHERE idUsuario=".$id_usuario;
+            $statement = $conexion->prepare($statement);
+	        $statement->setFetchMode(PDO::FETCH_ASSOC);
+            $statement->execute();
+            if ($statement->rowCount() != 0) {
+                $statement="UPDATE colaborador SET activo='V' WHERE idUsuario=".$id_usuario;
+            }else{
+            $statement = "INSERT INTO colaborador (idUsuario,activo) VALUES (".$id_usuario.",'V')";
+            $statement = $conexion->prepare($statement);
+            if($statement->execute()){
+                if($_SESSION['tipo_usuario']=='EST') $tabla = "estudiante";
+                else $tabla = "profesor";
+
+                $query = "SELECT mail FROM usuario as u JOIN ".$tabla." as a ON (a.id_usuario=u.idUsuario) WHERE idUsuario=".$id_usuario;
+                $query = $conexion->prepare($query);
+                $query->setFetchMode(PDO::FETCH_ASSOC);
+                $query->execute();
+                $row = $query->fetch();
+                enviar_mail4($row['mail'],'GRACIAS POR SU APORTE!','Ahora forma parte de nuestro grupo de colaboradores');
+                echo "<html><script>alert(\"Objeto de aprendizaje subido correctamente\")</script></html>";
+                header("Location:pro_importar_catalogar.php");
+            }
+            }
+
+           
         } else {
 
             $seGuardo_sto = 0;
