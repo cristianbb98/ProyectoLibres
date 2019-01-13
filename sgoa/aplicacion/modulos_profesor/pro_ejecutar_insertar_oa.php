@@ -67,8 +67,8 @@ if ($seGuardo_db == 1) {
                 $query->execute();
                 $row = $query->fetch();
                 enviar_mail4($row['mail'],'GRACIAS POR SU APORTE!','Ahora forma parte de nuestro grupo de colaboradores');
-                echo "<html><script>alert(\"Objeto de aprendizaje subido correctamente\")</script></html>";
-                header("Location:pro_importar_catalogar.php");
+                echo '<script type="text/javascript">alert("Objeto de aprendizaje subido correctamente");</script>';
+                header("Location: pro_buscar.php");
             }
             }
 
