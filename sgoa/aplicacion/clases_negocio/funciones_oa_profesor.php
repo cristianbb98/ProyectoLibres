@@ -331,4 +331,22 @@ function enviar_mail3($to_mail, $usuario, $contrasenia)
         echo "ERROR";
     }
 }
+
+function enviar_mail4($to_mail, $subj, $content)
+{
+	$email = 'proyecto.libres.2018b@gmail.com';
+	$to = ''. $to_mail . '';
+    $subject = $subj;
+    $message = $content;
+    $headers = 'From: ' .$email . "\r\n". 
+	'Reply-To: ' . $email. "\r\n" . 
+	'X-Mailer: PHP/' . phpversion();
+  
+    if (mail($to_mail, $subject, $message, $headers)) {
+        echo "SUCCESS";
+    } else {
+        echo '<html><script>alert($to_mail)</script></html>';
+        echo "ERROR";
+    }
+}
 ?>

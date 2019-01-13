@@ -1,5 +1,6 @@
 <?php
 
+require '../../aplicacion/clases_negocio/funciones_oa_estudiante.php';
 require '../../aplicacion/clases_negocio/funciones_oa_profesor.php';
 
 $cedula = filter_input(INPUT_POST, 'cedula');
