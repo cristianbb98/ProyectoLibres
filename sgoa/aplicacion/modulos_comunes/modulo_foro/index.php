@@ -154,7 +154,19 @@ if (@!$_SESSION['usuario']) {
 
 <body>
 
-<?php if ($_SESSION['tipo_usuario'] == 'ADM' ){
+<?php 
+    require '../../clases_negocio/clase_conexion.php';
+    $conexion = new Conexion();
+    $statement = "SELECT count(*), colaborador.activo FROM colaborador JOIN usuario ON (colaborador.idUsuario=usuario.idUsuario) 
+            WHERE usuario.idUsuario =".$_SESSION['id'];
+    $consulta = $conexion->prepare($statement);
+	$consulta->setFetchMode(PDO::FETCH_ASSOC);
+	$consulta->execute();
+	$row = $consulta->fetch();
+    $activo = $row['activo'];
+    $numero = $row['count(*)'];
+    
+if ($_SESSION['tipo_usuario'] == 'ADM' ){
    
    echo '<nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -180,7 +192,7 @@ if (@!$_SESSION['usuario']) {
                 <li ><a href="../../modulos_administrador/adm_buscar_estudiantes.php">Gestionar Estudiantes</a></li>
                 <li ><a href="../../modulos_administrador/adm_comentarios_todos.php">Gestionar comentarios</a></li>
                 <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestión de colaboradores
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Gestionar colaboradores
                     <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="../modulos_comunes/modulo_colaboradores/buscar_colaborador.php">Buscar</a></li>
@@ -216,18 +228,28 @@ if (@!$_SESSION['usuario']) {
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
                 <li><a href="../../modulos_profesor/pro_importar_catalogar.php">Importar y catalogar</a></li>
-                <li><a href="../../modulos_profesor/pro_buscar.php">Buscar</a></li>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Colaboradores
-                        <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="../modulo_colaboradores/buscar_colaborador.php">Buscar</a></li>
-                        <li><a href="../modulo_colaboradores/registrar.php">Registrarse</a></li>
-                        <li><a href="../modulo_colaboradores/perfil_colaborador.php">Perfil</a></li>
-                        <li><a href="../modulo_colaboradores/actualizar_datos_colaborador.php">Actualizar datos</a></li>
-                    </ul>
-                </li>
-                <li><a href="../../modulos_profesor/pro_herramientas.php">Herramientas</a></li>
+                <li><a href="../../modulos_profesor/pro_buscar.php">Buscar</a></li>';
+                
+        if($activo=='V'){
+
+            echo '<li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Colaboradores
+                <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li><a href="../modulo_colaboradores/buscar_colaborador.php">Buscar</a></li>
+                <li><a href="../modulo_colaboradores/registrar.php">Registrarse</a></li>
+                <li><a href="../modulo_colaboradores/perfil_colaborador.php">Perfil</a></li>
+                <li><a href="../modulo_colaboradores/actualizar_datos_colaborador.php">Actualizar datos</a></li>
+            </ul>
+            </li>';
+            
+        }else if($activo=='F' or $numero==0){
+            
+            echo '<li><a href="../modulo_colaboradores/ejecutar_registrar_colaborador.php">Colaboradores</a></li>';
+                        
+        }          
+
+            echo '<li><a href="../../modulos_profesor/pro_herramientas.php">Herramientas</a></li>
                 <li class="active"><a href="index.php">Foro</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -281,7 +303,7 @@ if (@!$_SESSION['usuario']) {
             </div>
 <?php 
 	
-	require '../../clases_negocio/clase_conexion.php';
+	
 
 	$idLogin = $_SESSION['id'];
 	$nombre = $_SESSION['usuario'];
@@ -308,7 +330,7 @@ if (@!$_SESSION['usuario']) {
     $consulta = $conexion->prepare($statement);
 	$consulta->setFetchMode(PDO::FETCH_ASSOC);
 	$consulta->execute();
-
+    
 	while($row = $consulta->fetch()){
 		$id = $row['idForo'];
 		$usuario = $row['usuario'];
@@ -316,7 +338,7 @@ if (@!$_SESSION['usuario']) {
 		$fecha = $row['fecha'];
 		$respuestas = $row['respuestas'];
 		echo "<tr>";
-			echo "<td>$usuario</td>";
+			echo "<td>$usuario </td>";
 			echo "<td>$titulo</td>";
 			echo "<td>".date("d-m-y,$fecha")."</td>";
 			echo "<td>$respuestas</td>";
@@ -327,7 +349,7 @@ if (@!$_SESSION['usuario']) {
 </table>
 <br>
 <br>
-<?php echo "<button onclick=\"location.href='formulario.php'\">INSERTAR NUEVO TEMA</td>";?>
+<?php echo "<button onclick=\"location.href='formulario.php'\">INSERTAR NUEVO TEMA</td>"; ?>
 
 </body>
 </html>

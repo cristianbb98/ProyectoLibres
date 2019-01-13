@@ -4,6 +4,10 @@ if (@!$_SESSION['usuario']) {
     header("Location:../../index2.php");
 }
 
+if (isset($_GET['mensaje'])) {
+    echo '<script type="text/javascript">alert("DEBE CARGAR UN OA PARA SER COLABORADOR");</script>';
+}
+
     require_once 'High/examples/pie-basic/conexion.php';
     $sql = "select * from facultad";
     $result = mysqli_query($conexion, $sql); 
