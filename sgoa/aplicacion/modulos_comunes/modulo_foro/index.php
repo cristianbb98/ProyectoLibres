@@ -200,7 +200,7 @@ if ($_SESSION['tipo_usuario'] == 'ADM' ){
                 </ul>
             </li>
                 <li><a href="../../modulos_administrador/adm_herramientas.php">Herramientas</a></li>
-                <li class="active"><a href="index.php">Foro</a></li>">
+                <li class="active"><a href="index.php">Foro</a></li>
                 
                 
             </ul>

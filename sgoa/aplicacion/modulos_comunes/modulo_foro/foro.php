@@ -304,13 +304,17 @@ if (@!$_SESSION['usuario']) {
 		$mensaje = $row['mensaje'];
 		$fecha = $row['fecha'];
         $respuestas = $row['respuestas'];
-       
+        $imagen = $row['imagen'];
+        
         echo "<table class=\"table table-striped\" border =\"1|1\" class=\"table table-bordered\" id=\"tabla\">
                 <thead>
                 <tr  class=\"warning\"><th> Titulo</th><td>".$titulo."</td></tr>
                 <tr  class=\"warning\"><th> Mensaje</th><td>".$mensaje."</td></tr>
                 <tr  class=\"warning\"><th> Autor</th><td>".$autor."</td></tr>
                 <tr  class=\"warning\"><th> Fecha</th><td>".$fecha."</td></tr>";
+                if ($imagen!=''){
+                    echo "<tr  class=\"warning\"><th> Imagen </th><td><img src=\"$imagen\" width=\"500\" height=\"200\"></td></tr>";
+                    }
              // echo "<tr><th></th><td class=\"danger\"><a href=formulario.php?respuestas=".$respuestas.".&identificador=".$id.">RESPONDER</a></td></tr>";
 		    echo "</table>";
 	}
