@@ -201,6 +201,14 @@ $identificador = 0;
     <td>
     <input type="file" name="archivo" id="archivo">
          </td>
+    <td>
+    </tr>
+    <tr class="success">
+    <th>Video</th>
+    <td>
+    <input type="file" name="video" id="video">
+     </td>
+     </tr>
     <tr class="warning">
       <td></td><td><input type="submit" id="submit" name="submit" value="Enviar Mensaje"></td>
     </tr>
