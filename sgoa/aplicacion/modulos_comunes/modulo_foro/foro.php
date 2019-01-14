@@ -184,7 +184,7 @@ if (@!$_SESSION['usuario']) {
                 </ul>
             </li>
                 <li><a href="../../modulos_administrador/adm_herramientas.php">Herramientas</a></li>
-                <li class="active"><a href="index.php">Foro</a></li>">
+                <li class="active"><a href="index.php">Foro</a></li>
                 
                 
             </ul>
@@ -268,6 +268,7 @@ if (@!$_SESSION['usuario']) {
 		$fecha = $row['fecha'];
         $respuestas = $row['respuestas'];
         $imagen = $row['imagen'];
+        $video = $row['video'];
 			
         echo " <table class=\"table table-striped\" border =\"1|1\" class=\"table table-bordered\" id=\"tabla\">
                     <thead>
@@ -277,6 +278,15 @@ if (@!$_SESSION['usuario']) {
         if ($imagen!=''){
             echo "<tr  class=\"warning\"><th> Imagen </th><td><img src=\"$imagen\" width=\"500\" height=\"200\"></td></tr>";
             }
+            if ($video!=''){
+                echo "<tr  class=\"warning\"><th> Video </th><td>
+                    <video width=\"500\" controls>
+                    <source src=\"".$video."\" type=\"video/mp4\">
+                      Your browser does not support HTML5 video.
+                    </video>
+
+                    ";
+                }
         echo "<tr ><th></th><td class=\"danger\"><a href=formulario.php?respuestas=".$respuestas.".&identificador=".$id.">RESPONDER</a></td></tr>
                      </thead>
                      </table>";
@@ -305,6 +315,7 @@ if (@!$_SESSION['usuario']) {
 		$fecha = $row['fecha'];
         $respuestas = $row['respuestas'];
         $imagen = $row['imagen'];
+        $video = $row['video'];
         
         echo "<table class=\"table table-striped\" border =\"1|1\" class=\"table table-bordered\" id=\"tabla\">
                 <thead>
@@ -313,9 +324,19 @@ if (@!$_SESSION['usuario']) {
                 <tr  class=\"warning\"><th> Autor</th><td>".$autor."</td></tr>
                 <tr  class=\"warning\"><th> Fecha</th><td>".$fecha."</td></tr>";
                 if ($imagen!=''){
-                    echo "<tr  class=\"warning\"><th> Imagen </th><td><img src=\"$imagen\" width=\"500\" height=\"200\"></td></tr>";
+                    echo "<tr  class=\"warning\"><th> Imagen </th><td><img src=\"$imagen\" width=\"500\" height=\"200\"></img></td></tr>";
+                }
+                if ($video!=''){
+                    echo "<tr  class=\"warning\"><th> Video </th><td>
+                        <video width=\"500\" controls>
+                        <source src=\"".$video."\" type=\"video/mp4\">
+                          Your browser does not support HTML5 video.
+                        </video>
+    
+                        ";
                     }
-             // echo "<tr><th></th><td class=\"danger\"><a href=formulario.php?respuestas=".$respuestas.".&identificador=".$id.">RESPONDER</a></td></tr>";
+                
+            /// echo "<tr><th></th><td class=\"danger\"><a href=formulario.php?respuestas=".$respuestas.".&identificador=".$id.">RESPONDER</a></td></tr>";
 		    echo "</table>";
 	}
 

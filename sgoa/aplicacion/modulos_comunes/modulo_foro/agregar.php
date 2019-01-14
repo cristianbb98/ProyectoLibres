@@ -23,6 +23,17 @@ if (!empty($_FILES["archivo"]["name"])){
 
 }
 
+if (!empty($_FILES["video"]["name"])){
+	$nombre_archivo = $_FILES['video']['name'];
+	$tipo_archivo= $_FILES['video']['type'];
+	$tamano_archivo = $_FILES["video"]['size'];
+	$direccion_temporal = $_FILES['video']['tmp_name'];
+	$direccion_servidor_video="videos/" . $_FILES['video']['name'];
+	move_uploaded_file($_FILES['video']['tmp_name'],$direccion_servidor_video);
+}else{
+	$direccion_servidor_video = "";
+
+}
 
 require '../../clases_negocio/clase_conexion.php';
 
@@ -38,8 +49,8 @@ require '../../clases_negocio/clase_conexion.php';
 			$conexion=new Conexion();
 			//Grabamos el mensaje en la base de datos.
 			
-			$query = "	INSERT INTO foro (idUsuario, titulo, mensaje, identificador, imagen) 
-						VALUES ('$idLogin', '$titulo', '$mensaje', $identificador, '$direccion_servidor')";
+			$query = "	INSERT INTO foro (idUsuario, titulo, mensaje, identificador, imagen, video) 
+						VALUES ('$idLogin', '$titulo', '$mensaje', $identificador, '$direccion_servidor', '$direccion_servidor_video')";
 			
 			echo $query;
 						

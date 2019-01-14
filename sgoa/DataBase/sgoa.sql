@@ -579,7 +579,8 @@ CREATE TABLE IF NOT EXISTS `foro` (
   `respuestas` int(11) NOT NULL DEFAULT '0',
   `identificador` int(7) NOT NULL DEFAULT '0',
   `ult_respuesta` date DEFAULT NULL, 
-  `imagen` varchar(45) DEFAULT ''
+  `imagen` varchar(45) DEFAULT '',
+  `video` varchar(45) DEFAULT ''
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 ALTER TABLE `foro`
