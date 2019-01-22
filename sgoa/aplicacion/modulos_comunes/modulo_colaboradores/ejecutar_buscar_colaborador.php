@@ -257,7 +257,7 @@ Debe tener la opción de buscar por: apellido o cédula.
                         </div>
                         <div class="col-md-3 text-left">
                             <button id="registrar" type="submit" class="btn btn-danger">
-                            	<a href= "../../modulos_comunes/modulo_colaboradores/ejecutar_buscar_colaborador.php">Buscar</a></button>
+                                <a href= "../../modulos_comunes/modulo_colaboradores/buscar_colaborador.php">Buscar</a></button>
                     <br><br>
                 </div>
 
@@ -278,9 +278,10 @@ Debe tener la opción de buscar por: apellido o cédula.
             </div>
 
 
+
 <?php 
     
-  /*
+  
 
     $idLogin = $_SESSION['id'];
     $nombre = $_SESSION['usuario'];
@@ -290,7 +291,7 @@ Debe tener la opción de buscar por: apellido o cédula.
 FROM objeto_aprendizaje AS OA 
 JOIN usuario AS u ON OA.id_usuario=u.idUsuario 
 JOIN profesor AS pro ON pro.id_usuario=u.idUsuario 
-WHERE OA.idobjeto_aprendizaje > 0";
+WHERE OA.idobjeto_aprendizaje > 0 ";
    
     $consulta = $conexion->prepare($statement);
    
@@ -315,7 +316,6 @@ WHERE OA.idobjeto_aprendizaje > 0";
             echo "<td><a href= ../../modulos_administrador/adm_buscar.php>Revisar objeto/s de aprendizaje</a></td>";
         echo "</tr>";
     }
-    */
 ?>
 </body>
 </html>
