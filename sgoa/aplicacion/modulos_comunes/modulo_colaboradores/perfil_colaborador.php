@@ -173,7 +173,67 @@ if (@!$_SESSION['usuario']) {
         </div>
     </div>
  </nav>
-<?php 
+            <div class="col-sm-12 text-center"> 
+                    <h2> Perfil Colaborador</h2>
+            </div>
+
+            <?php
+            require '../../clases_negocio/clase_conexion.php';
+            
+            if(isset($_GET["id"]))
+            $id = $_GET['id'];
+            else $idLogin = $_SESSION['id'];
+            
+            $nombre = $_SESSION['usuario'];
+            $tipo_usuario = $_SESSION['tipo_usuario'];
+
+            if($tipo_usuario =='PRO'){
+                $statement = "select * from usuario join colaborador on (usuario.idUsuario=colaborador.idUsuario) join profesor on (colaborador.idUsuario=profesor.id_usuario) where colaborador.idUsuario=".$idLogin;
+
+            }else{
+                $statement = "select * from usuario join colaborador on (usuario.idUsuario=colaborador.idUsuario) join estudiante on (colaborador.idUsuario=estudiante.id_usuario) where colaborador.idUsuario=".$idLogin;
+
+            }
+            
+            $conexion = new Conexion();
+            $consulta = $conexion->prepare($statement);
+            //$consulta->setFetchMode(PDO::FETCH_ASSOC);
+            $consulta->execute();
+
+            echo "  <div class=\"container\">";
+
+        	while($row = $consulta->fetch()){
+                $usuario = $row['usuario'];
+                $ci = $row['ci'];
+                $foto = $row['foto'];
+                $nombre = $row['nombres'];
+                $apellido = $row['apellidos'];
+		        $direccion = $row['domicilio'];
+		        $fecha = $row['fecha_nacimiento'];
+                $correo = $row['mail'];
+                $telefono = $row['celular'];
+
+                  
+                echo "<table class=\"table table-striped\" border =\"1|1\" class=\"table table-bordered\" id=\"tabla\">
+                    <thead>                    
+                    <tr  class=\"success\"><th> Foto de Perfil</th><td><img src = \"".$foto."\" width=\"150\" height=\"150\"></td></tr>
+                    <tr  class=\"warning\"><th> Usuario</th><td>".$usuario."</td></tr>
+                    <tr  class=\"warning\"><th> Cédula</th><td>".$ci."</td></tr>
+                    <tr  class=\"warning\"><th> Nombre y Apellido</th><td>".$nombre." ".$apellido."</td></tr>
+                    <tr  class=\"warning\"><th> Dirección</th><td>".$direccion."</td></tr>
+                    <tr  class=\"warning\"><th> Fecha de nacimiento</th><td>".$fecha."</td></tr>
+                    <tr  class=\"warning\"><th> Correo Electrónico</th><td>".$correo."</td></tr>
+					<tr  class=\"warning\"><th> Teléfono</th><td>".$telefono."</td></tr>";
+                    echo "</table>";
+            }
+            echo "</div>";
+            ?>
+            <?php 
+
+
+
+
+
 
 /* Los datos cédula de identidad, nombres y apellidos, fecha de nacimiento, género, 
 dirección de domicilio, telefono convencional, telefono celular y correo electrónico
@@ -198,41 +258,6 @@ LOS CAMPOS NO DEBEN SER EDITABLES.
 Para la lectura de la imagen hay una función en foro.php del modulo_foro
 
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

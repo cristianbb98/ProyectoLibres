@@ -201,7 +201,6 @@ $identificador = 0;
     <td>
     <input type="file" name="archivo" id="archivo">
          </td>
-    <td>
     </tr>
     <tr class="success">
     <th>Video</th>

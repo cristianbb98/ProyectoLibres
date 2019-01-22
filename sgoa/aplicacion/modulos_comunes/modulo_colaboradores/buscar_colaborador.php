@@ -174,7 +174,7 @@ if (@!$_SESSION['usuario']) {
                         </ul>
                     </li>
                     <li><a href="../../modulos_administrador/adm_herramientas.php">Herramientas</a></li>
-                    <li ><a href="../modulo_foro/index.php">Foro</a></li>">
+                    <li ><a href="../modulo_foro/index.php">Foro</a></li>
                     
                     
                 </ul>

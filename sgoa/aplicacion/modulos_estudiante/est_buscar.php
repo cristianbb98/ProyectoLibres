@@ -102,7 +102,7 @@ if (@!$_SESSION['usuario']) {
                         <li><a href="../modulos_comunes/modulo_colaboradores/actualizar_datos_colaborador.php">Actualizar datos</a></li>
                     </ul>
                 </li>
-                <li class="active"><a href="../modulos_estudiante/est_herramientas.php">Herramientas</a></li>
+                <li><a href="../modulos_estudiante/est_herramientas.php">Herramientas</a></li>
                                 <li><a href="../modulos_comunes/modulo_foro/index.php">Foro</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
