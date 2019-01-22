@@ -231,49 +231,104 @@ Se deben desplegar todos los campos de cada colaborador indicados arriba (incluy
 colaboraciones para descargar y el nombre de las colaboraciones)(como en el archivo "modulos_administrador/adm_buscar.php")
 en una tabla como en el archivo index.php del modulo foro. 
 Debe tener la opción de buscar por: apellido o cédula.
-
-
-
 */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ?>
+<!-- Inicio formulario de búsqueda -->
 
+<!-- presentacion de objetos de aprendizaje-->
+<div class="container-fluid text-center">
+    <div class="row content">
+    <div class="col-sm-12 text-center"> 
+                    <h2>BÚSQUEDA DE COLABORADORES</h2>
+            <form action="buscar_colaborador.php" method="post" enctype="multipart/form-data">
+                    <div class="col-md-3">
+                        </div>            
+                        <div class="col-md-3 text-left ">
+                            <select class= "form-control" name="tipo_criterio" dir="ltr" required>
+                                <option value="">Buscar por:</option>
+                                <option value="apellido">Apellido</option>
+                                <option value="cedula">Cédula</option>
+                            </select><br>
+                        </div>
+                    <!--<input type="text" class="form-control" id="criterio_busqueda" placeholder="Buscar...." name="criterio_busqueda" required></br>-->
+               
+                    <div class="col-md-3 text-center">
+                            <input type="text" class="form-control" id="criterio_busqueda" placeholder="Buscar...." name="criterio_busqueda" required></br>
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <button id="registrar" type="submit" class="btn btn-danger">Buscar</button>
+
+                    <br><br>
+                </div>
+
+            </form>
+
+            <div class="container" >
+                <table class="table table-striped" border="1|1" class="table table-bordered" id="tabla">
+                    <thead>
+                    <tr class="warning">
+                        <td>Usuario</td>
+                        <td>Tipo de Usuario</td>
+                        <td>Apellido</td>
+                        <td>Cédula</td>
+                        <td>Correo</td>
+                        <td>Objetos de Aprendizaje</td>
+                    </tr>
+                    </thead>
+            </div>
+
+
+
+<?php 
+    
+    
+
+    $idLogin = $_SESSION['id'];
+    $nombre = $_SESSION['usuario'];
+    require '../../clases_negocio/clase_conexion.php';
+    $conexion = new Conexion();
+    $statement = "SELECT pro.apellidos, u.usuario, pro.apellidos, u.tipo_usuario, pro.ci, pro.mail ,u.idUsuario, OA.ruta FROM profesor AS pro JOIN usuario AS u ON pro.id_usuario=u.idUsuario JOIN objeto_aprendizaje AS OA ON OA.id_usuario=u.idUsuario Where pro.id_usuario in ( select id_usuario from objeto_aprendizaje Where idobjeto_aprendizaje > 0)";
+    
+    $criterio = filter_input(INPUT_POST, 'tipo_criterio');
+    $valor_criterio = filter_input(INPUT_POST, 'criterio_busqueda');
+    
+    $clausula_where = " ";
+        switch ($criterio) {
+            case 'apellido':
+                $clausula_where = ' and apellidos like "%' . $valor_criterio . '%" order by apellidos';
+                $statement = $statement . $clausula_where;
+                break;
+            case 'cedula':
+                $clausula_where = ' and ci like "%' . $valor_criterio . '%" order by ci';
+                $statement = $statement . $clausula_where;
+                
+                break;
+        }
+    
+     $consulta = $conexion->prepare($statement);
+   
+    $consulta->execute();
+    
+    //defino las variables
+    while($row = $consulta->fetch()){
+        $id = $row['idUsuario'];
+        $usuario = $row['usuario'];
+        $tipousuario = $row['tipo_usuario'];
+        $apellido = $row['apellidos'];
+        $cedula = $row['ci'];
+        $correo = $row['mail'];
+        $Objt = $row['ruta'];
+        echo "<tr>"; //lleno las los campos
+            echo "<td>$usuario </td>";
+            echo "<td>$tipousuario </td>";
+            echo "<td>$apellido</td>";
+            echo "<td> $cedula</td>";
+            echo "<td>$correo</td>";
+            echo "<td>$Objt</td>";
+            echo "<td><a href= ../../modulos_administrador/adm_buscar.php?idLogin=".$id.">Revisar objeto/s de aprendizaje</a></td>";
+            echo "<td><a href=perfil_colaborador.php?idLogin=".$id.">Ver perfil</a></td>";
+        echo "</tr>";
+    }
+?>
 </body>
 </html>
