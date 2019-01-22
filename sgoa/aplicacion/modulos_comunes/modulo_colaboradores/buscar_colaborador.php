@@ -240,7 +240,7 @@ Debe tener la opción de buscar por: apellido o cédula.
     <div class="row content">
     <div class="col-sm-12 text-center"> 
                     <h2>BÚSQUEDA DE COLABORADORES</h2>
-            <form action="index.php" method="post" enctype="multipart/form-data">
+            <form action="buscar_colaborador.php" method="post" enctype="multipart/form-data">
                     <div class="col-md-3">
                         </div>            
                         <div class="col-md-3 text-left ">
@@ -256,8 +256,8 @@ Debe tener la opción de buscar por: apellido o cédula.
                             <input type="text" class="form-control" id="criterio_busqueda" placeholder="Buscar...." name="criterio_busqueda" required></br>
                         </div>
                         <div class="col-md-3 text-left">
-                            <button id="registrar" type="submit" class="btn btn-danger">
-                            	<a href= "../../modulos_comunes/modulo_colaboradores/ejecutar_buscar_colaborador.php">Buscar</a></button>
+                            <button id="registrar" type="submit" class="btn btn-danger">Buscar</button>
+
                     <br><br>
                 </div>
 
@@ -278,21 +278,34 @@ Debe tener la opción de buscar por: apellido o cédula.
             </div>
 
 
+
 <?php 
     
-  /*
+    
 
     $idLogin = $_SESSION['id'];
     $nombre = $_SESSION['usuario'];
     require '../../clases_negocio/clase_conexion.php';
     $conexion = new Conexion();
-    $statement = "SELECT count(OA.idobjeto_aprendizaje) AS NumeroOA,u.usuario, pro.apellidos, u.tipo_usuario, pro.ci, pro.mail ,u.idUsuario
-FROM objeto_aprendizaje AS OA 
-JOIN usuario AS u ON OA.id_usuario=u.idUsuario 
-JOIN profesor AS pro ON pro.id_usuario=u.idUsuario 
-WHERE OA.idobjeto_aprendizaje > 0";
-   
-    $consulta = $conexion->prepare($statement);
+    $statement = "SELECT pro.apellidos, u.usuario, pro.apellidos, u.tipo_usuario, pro.ci, pro.mail ,u.idUsuario, OA.ruta FROM profesor AS pro JOIN usuario AS u ON pro.id_usuario=u.idUsuario JOIN objeto_aprendizaje AS OA ON OA.id_usuario=u.idUsuario Where pro.id_usuario in ( select id_usuario from objeto_aprendizaje Where idobjeto_aprendizaje > 0)";
+    
+    $criterio = filter_input(INPUT_POST, 'tipo_criterio');
+    $valor_criterio = filter_input(INPUT_POST, 'criterio_busqueda');
+    
+    $clausula_where = " ";
+        switch ($criterio) {
+            case 'apellido':
+                $clausula_where = ' and apellidos like "%' . $valor_criterio . '%" order by apellidos';
+                $statement = $statement . $clausula_where;
+                break;
+            case 'cedula':
+                $clausula_where = ' and ci like "%' . $valor_criterio . '%" order by ci';
+                $statement = $statement . $clausula_where;
+                
+                break;
+        }
+    
+     $consulta = $conexion->prepare($statement);
    
     $consulta->execute();
     
@@ -304,7 +317,7 @@ WHERE OA.idobjeto_aprendizaje > 0";
         $apellido = $row['apellidos'];
         $cedula = $row['ci'];
         $correo = $row['mail'];
-        $Objt = $row['NumeroOA'];
+        $Objt = $row['ruta'];
         echo "<tr>"; //lleno las los campos
             echo "<td>$usuario </td>";
             echo "<td>$tipousuario </td>";
@@ -312,10 +325,10 @@ WHERE OA.idobjeto_aprendizaje > 0";
             echo "<td> $cedula</td>";
             echo "<td>$correo</td>";
             echo "<td>$Objt</td>";
-            echo "<td><a href= ../../modulos_administrador/adm_buscar.php>Revisar objeto/s de aprendizaje</a></td>";
+            echo "<td><a href= ../../modulos_administrador/adm_buscar.php?idLogin=".$id.">Revisar objeto/s de aprendizaje</a></td>";
+            echo "<td><a href=perfil_colaborador.php?idLogin=".$id.">Ver perfil</a></td>";
         echo "</tr>";
     }
-    */
 ?>
 </body>
 </html>

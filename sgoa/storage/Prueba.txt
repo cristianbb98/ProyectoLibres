@@ -1,0 +1,109 @@
+SELECT * FROM profesor JOIN usuario ON (profesor.id_Usuario=usuario.idUsuario) WHERE profesor.ci = 1725790032
+
+SELECT * 
+FROM foro 
+JOIN usuario ON foro.idUsuario=usuario.idUsuario 
+JOIN profesor ON foro.idUsuario=usuario.idUsuario
+WHERE foro.identificador = 0
+
+
+SELECT *
+FROM foro AS f
+JOIN usuario AS u ON f.idUsuario=u.idUsuario 
+JOIN profesor AS pro ON f.idUsuario=u.idUsuario
+WHERE f.identificador = 0
+
+SELECT u.usuario, pro.apellidos, u.tipo_usuario, pro.ci, pro.mail
+FROM foro AS f
+JOIN usuario AS u ON f.idUsuario=u.idUsuario 
+JOIN profesor AS pro ON f.idUsuario=u.idUsuario
+WHERE f.identificador = 0
+
+SELECT QUE ESTOI USUANDO
+SELECT u.usuario, pro.apellidos, u.tipo_usuario, pro.ci, pro.mail, c.activo
+FROM foro AS f
+JOIN usuario AS u ON f.idUsuario=u.idUsuario 
+JOIN profesor AS pro ON f.idUsuario=u.idUsuario
+JOIN colaborador AS c ON c.idUsuario=u.idUsuario
+WHERE f.identificador = 0 and c.activo = 'V'
+
+SELECT QUE ESTOI USUANDO 2
+SELECT count(*) AS NumeroOA,u.usuario, pro.apellidos, u.tipo_usuario, pro.ci, pro.mail
+FROM foro AS f
+JOIN usuario AS u ON f.idUsuario=u.idUsuario 
+JOIN profesor AS pro ON f.idUsuario=u.idUsuario
+JOIN objeto_aprendizaje AS OA ON OA.id_usuario=u.idUsuario
+WHERE u.idUsuario ='4'
+
+SELECT QUE DEVUELVE EL NUMERO DE OA.
+SELECT count(*) AS NumeroOA,u.usuario, pro.apellidos, u.tipo_usuario, pro.ci, pro.mail
+FROM objeto_aprendizaje AS OA 
+JOIN usuario AS u ON OA.id_usuario=u.idUsuario
+JOIN profesor AS pro ON pro.id_usuario=u.idUsuario
+ WHERE u.idUsuario ='4'
+
+
+SELECT count(*) AS NumeroOA FROM objeto_aprendizaje AS OA JOIN usuario AS u ON OA.id_usuario=u.idUsuario WHERE u.idUsuario ='4'
+
+SELECT * 
+FROM profesor 
+JOIN usuario ON (profesor.id_Usuario=usuario.idUsuario) WHERE profesor.ci = 1725790032
+
+SELECT p.id_pelicula, p.titulo, p.anoLanzamiento, p.longitudMinutos, p.sinopsis, 
+c.nombre AS nombreCompania, 
+d.nombre as nombreDirector 
+FROM PELICULAS_DIRECTORES AS pd
+ JOIN PELICULAS AS p ON p.id_pelicula = pd.id_pelicula
+ JOIN DIRECTORES AS d ON d.id_director = pd.id_director
+ JOIN COMPANIAS AS c ON p.id_compania = c.id_compania;
+nom  ced  corr  obj
+
+SELECT nombre, cedula, correo, objetos
+FROM usuario 
+JOIN estudiante ON estudiante.id_Usuario=usuario.idUsuario
+JOIN profesor ON profesor.id_Usuario=usuario.idUsuario
+JOIN objeto_aprendizaje 
+WHERE usuario.ci = 1725790032
+
+SELECT *
+FROM usuario 
+JOIN estudiante ON estudiante.id_Usuario=usuario.idUsuario
+JOIN profesor ON profesor.id_Usuario=usuario.idUsuario
+JOIN objeto_aprendizaje 
+WHERE profesor.ci = 1725790032 or estudiante.ci = 1725790032 
+
+SELECT *
+FROM usuario 
+JOIN estudiante ON estudiante.id_Usuario=usuario.idUsuario
+JOIN profesor ON profesor.id_Usuario=usuario.idUsuario
+JOIN objeto_aprendizaje 
+WHERE profesor.ci = 1725790032 or estudiante.ci = 1725790032
+
+SELECT usuario.tipo_usuario
+FROM usuario 
+JOIN estudiante ON estudiante.id_Usuario=usuario.idUsuario
+JOIN profesor ON profesor.id_Usuario=usuario.idUsuario 
+WHERE usuario. = 1725790032
+
+
+SELECT estudiante.id_usuario, estudiante.ci, estudiante.nombres, estudiante.apellidos, estudiante.mail 
+
+FROM estudiante JOIN colaborador
+on estudiante.id_usuario=colaborador.idUsuario
+ UNION
+ 
+SELECT profesor.id_usuario, profesor.ci, profesor.nombres, profesor.apellidos, profesor.mail 
+
+FROM profesor JOIN colaborador
+on profesor.id_usuario=colaborador.idUsuario
+
+SELECT estudiante.id_usuario, estudiante.ci, estudiante.nombres, estudiante.apellidos, estudiante.mail
+, colaborador.colaboraciones
+FROM estudiante JOIN colaborador
+ on estudiante.id_usuario=colaborador.idUsuario 
+UNION 
+
+SELECT profesor.id_usuario, profesor.ci, profesor.nombres, profesor.apellidos, profesor.mail, colaborador.colaboraciones
+
+FROM profesor JOIN colaborador
+on profesor.id_usuario=colaborador.idUsuario
