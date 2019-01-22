@@ -12,6 +12,18 @@ function act_des_usuario($id_usuario, $activo)
     $consulta->execute();
 }
 
+function act_des_colaborador($id_usuario, $activo)
+{
+    $conexion = new Conexion();
+
+    $statement = 'UPDATE  colaborador SET activo ="' . $activo . '" WHERE idColaborador=' . $id_usuario;
+    //echo $statement;
+    $consulta = $conexion->prepare($statement);
+    $consulta->execute();
+}
+
+
+
 function consultarCarreras(){
     $conexion = new Conexion();
     $statement = 'select * from facultad';
@@ -39,6 +51,23 @@ function eliminar_usuario($id_usuario)
         return false;
     }
 }
+
+
+function eliminar_colaborador($id_usuario)
+{
+    $statement_del = "DELETE FROM colaborador WHERE idColaborador=?";
+    $conexion_del = new Conexion();
+    $consulta_del = $conexion_del->prepare($statement_del);
+    if ($consulta_del->execute(array($id_usuario))) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+
+
 
 function eliminar_objetos_aprendizaje_asociados_a_id($id_usuario)
 {

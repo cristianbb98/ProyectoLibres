@@ -241,38 +241,6 @@ Debe tener la opción de buscar por: apellido o cédula.
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ?>
 
 </body>
