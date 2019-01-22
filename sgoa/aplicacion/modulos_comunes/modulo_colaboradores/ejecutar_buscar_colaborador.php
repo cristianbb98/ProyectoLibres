@@ -314,6 +314,7 @@ WHERE OA.idobjeto_aprendizaje > 0 ";
             echo "<td>$correo</td>";
             echo "<td>$Objt</td>";
             echo "<td><a href= ../../modulos_administrador/adm_buscar.php>Revisar objeto/s de aprendizaje</a></td>";
+            echo "<td><a href=perfil_colaborador.php?idLogin=".$id.">Ver perfil</a></td>";
         echo "</tr>";
     }
 ?>
