@@ -7,7 +7,8 @@ if (@!$_SESSION['usuario']) {
 } elseif ($_SESSION['tipo_usuario'] == 'ADM') {
     header("Location:../../../index.php");
 }
-   
+$idLogin = $_SESSION['id'];
+$nombre = $_SESSION['usuario']; 
     
 ?>
 
@@ -173,48 +174,102 @@ if (@!$_SESSION['usuario']) {
             </div>
         </div>
      </nav>
+     <div class="col-sm-12 text-center"> 
+                    <h2> Actualización de Datos</h2>
+            </div>
 
+            <div class="container-fluid text-center">
+    <div class="row content">
+    <div class="col-md-3 text-center">
+                    <!--<input type="text" class="form-control" id="criterio_busqueda" placeholder="Buscar...." name="criterio_busqueda" required></br>-->
+                </div>
+                <div class="col-md-3 text-left">
+                    <br><br>
+                </div>
+                <div class="container">
 <?php
+    require '../../clases_negocio/clase_conexion.php';
+    $idLogin = $_SESSION['id'];
 
-/* Los datos cédula de identidad, nombres y apellidos, fecha de nacimiento, género, 
-dirección de domicilio, telefono convencional, telefono celular, correo electrónico y foto.
-se encuentran entre la tabla usuario, la tabla estudiante o profesor segun corresponda
-y la tabla colaboradores.
+    $nombre = $_SESSION['usuario'];
+    $tipo_usuario = $_SESSION['tipo_usuario'];
 
-Se deben desplegar los campos en cuadros de texto editables y al dar en el boton
-actualizar datos se actualicen las tablas correspondientes.
+    if($tipo_usuario =='PRO'){
+        $statement = "select * from usuario join colaborador on (usuario.idUsuario=colaborador.idUsuario) join profesor on (colaborador.idUsuario=profesor.id_usuario) where colaborador.idUsuario=".$idLogin;
 
+    }else{
+        $statement = "select * from usuario join colaborador on (usuario.idUsuario=colaborador.idUsuario) join estudiante on (colaborador.idUsuario=estudiante.id_usuario) where colaborador.idUsuario=".$idLogin;
 
-TODOS LOS CAMPOS DEBEN SER EDITABLES INCLUYENDO LA FOTO.
+    }
+            $conexion = new Conexion();
+            $consulta = $conexion->prepare($statement);
 
-Para actualixar la foto de perfil, hay funciónes en formulario.php y agregar.php del modulo_foro*/
+            $consulta->execute();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        	while($row = $consulta->fetch()){
+                $usuario = $row['usuario'];
+                $ci = $row['ci'];
+                $foto = $row['foto'];
+                $nombre = $row['nombres'];
+                $apellido = $row['apellidos'];
+		        $direccion = $row['domicilio'];
+		        $fecha = $row['fecha_nacimiento'];
+                $correo = $row['mail'];
+                $telefono = $row['celular'];
+            }
 ?>
 
-
+<table class="table table-striped" border ="1|1" class="table table-bordered" id="tabla">
+<thead>
+<form name="form" action="ejecutar_actualizar.php" method="post" enctype="multipart/form-data">
+    <tr class="success">
+    <th>Foto</th>
+    <td>
+    <img src ="<?php echo $foto?>" width="150" height="150"> <br>
+    <input type="file" name="archivo" id="archivo">
+         </td>
+    </tr>
+    <tr class="success">
+		<th>Usuario </th>
+		<td><?php echo $usuario?></td>
+    </tr>
+    <tr class="success">
+      <th>CI</th>
+      <td><input type="text" name="ci" cols="100" rows="50" required="required" value = <?php echo $ci?>></td>
+    </tr>
+    <tr class="success">
+      <th>Nombre</th>
+      <td><input type="text" name="nombre" cols="100" rows="50" required="required" value = <?php echo $nombre?>></td>
+    </tr>
+    <tr class="success">
+      <th>Apellido</th>
+      <td><input type="text" name="apellido" cols="100" rows="50" required="required" value = <?php echo $apellido?>></td>
+    </tr>
+    <tr class="success">
+      <th>Dirección</th>
+      <td><input type="text" name="direccion" cols="50" rows="5" required="required" value = <?php echo $direccion?>></td>
+    </tr>
+    <tr class="success">
+      <th>Fecha de Nacimiento</th>
+      <td><input type="text" name="fecha_nacimiento" cols="50" rows="5" required="required" value = <?php echo $fecha?>></td>
+    </tr>
+    <tr class="success">
+      <th>Correo Electrónico</th>
+      <td><input type="text" name="correo" cols="50" rows="5" required="required" readonly = "readonly" value = <?php echo $correo?>></td>
+    </tr>
+    <tr class="success">
+      <th>Teléfono</th>
+      <td><input type="text" name="telefono" cols="50" rows="5" required="required" value = <?php echo $telefono?>></td>
+    </tr>
+    
+    <tr class="warning">
+      <td></td><td><input type="submit" id="submit" name="submit" value="Actualizar Datos"></td>
+    </tr>
+    </form>
+    
+    </thead>
+</table>
+</div>
 
 </body>
 </html>
