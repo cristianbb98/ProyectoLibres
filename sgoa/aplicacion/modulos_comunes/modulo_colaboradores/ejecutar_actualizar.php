@@ -55,7 +55,7 @@ require '../../clases_negocio/clase_conexion.php';
             $consulta = $conexion ->prepare($statement);
 			$consulta->execute();
             
-            $statement = "	UPDATE usuario set foto = '$direccion_servidor'";
+            $statement = "	UPDATE usuario set foto = '$direccion_servidor' WHERE idUsuario = $idLogin";
 			
 			echo $statement;
 						

@@ -40,6 +40,18 @@ function eliminar_usuario($id_usuario)
     }
 }
 
+function eliminar_colaborador($id_usuario)
+{
+    $statement_del = "DELETE FROM colaborador WHERE idColaborador=?";
+    $conexion_del = new Conexion();
+    $consulta_del = $conexion_del->prepare($statement_del);
+    if ($consulta_del->execute(array($id_usuario))) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function eliminar_objetos_aprendizaje_asociados_a_id($id_usuario)
 {
     $conexion = new Conexion();

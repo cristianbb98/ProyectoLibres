@@ -180,8 +180,8 @@ if (@!$_SESSION['usuario']) {
             <?php
             require '../../clases_negocio/clase_conexion.php';
             
-            if(isset($_GET["id"]))
-            $id = $_GET['id'];
+            if(isset($_GET["idLogin"]))
+            $idLogin = $_GET['idLogin'];
             else $idLogin = $_SESSION['id'];
             
             $nombre = $_SESSION['usuario'];

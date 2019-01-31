@@ -287,7 +287,7 @@ Debe tener la opción de buscar por: apellido o cédula.
     $nombre = $_SESSION['usuario'];
     require '../../clases_negocio/clase_conexion.php';
     $conexion = new Conexion();
-    $statement = "SELECT pro.apellidos, u.usuario, pro.apellidos, u.tipo_usuario, pro.ci, pro.mail ,u.idUsuario, OA.ruta FROM profesor AS pro JOIN usuario AS u ON pro.id_usuario=u.idUsuario JOIN objeto_aprendizaje AS OA ON OA.id_usuario=u.idUsuario Where pro.id_usuario in ( select id_usuario from objeto_aprendizaje Where idobjeto_aprendizaje > 0)";
+    $statement = "SELECT pro.apellidos, u.usuario,  u.tipo_usuario, pro.ci, pro.mail ,u.idUsuario, OA.ruta FROM profesor AS pro JOIN usuario AS u ON (pro.id_usuario=u.idUsuario) JOIN objeto_aprendizaje AS OA ON OA.id_usuario=u.idUsuario Where pro.id_usuario in ( select id_usuario from objeto_aprendizaje Where idobjeto_aprendizaje > 0)";
     
     $criterio = filter_input(INPUT_POST, 'tipo_criterio');
     $valor_criterio = filter_input(INPUT_POST, 'criterio_busqueda');

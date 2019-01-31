@@ -208,30 +208,161 @@ Debe tener la opción de buscar por: apellido o cédula.
 */
 
 
+?>
 
 
+<body>
 
+<?php 
+    require_once '../../clases_negocio/clase_conexion.php';
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    $conexion = new Conexion();
+    $statement = "SELECT count(*), colaborador.activo FROM colaborador JOIN usuario ON (colaborador.idUsuario=usuario.idUsuario) 
+            WHERE usuario.idUsuario =".$_SESSION['id'];
+    $consulta = $conexion->prepare($statement);
+	$consulta->setFetchMode(PDO::FETCH_ASSOC);
+	$consulta->execute();
+	$row = $consulta->fetch();
+    $activo = $row['activo'];
+    $numero = $row['count(*)'];
+    
 
 ?>
+
+<div class="container-fluid text-center">
+    <div class="row content">
+    <div class="col-sm-12 text-center"> 
+                    <h2>ELIMINAR COLABORADORES</h2>
+
+                    <form action="eliminar_colaborador.php" method="post" enctype="multipart/form-data">
+                    <div class="col-md-3">
+                        </div>            
+                        <div class="col-md-3 text-left ">
+                            <select class= "form-control" name="tipo_criterio" dir="ltr" required>
+                                <option value="">Filtrar por:</option>
+                                <option value="apellido">Apellido</option>
+                                <option value="cedula">Cédula</option>
+                            </select><br>
+                        </div>
+                    <div class="col-md-3 text-center">
+                            <input type="text" class="form-control" id="criterio_busqueda" placeholder="Buscar...." name="criterio_busqueda" required></br>
+                        </div>
+                        <div class="col-md-3 text-left">
+                            <button id="registrar" type="submit" class="btn btn-danger">Buscar</button>
+                    <br><br>
+                </div>
+
+            </form>
+            
+            <div class="container" >
+                <table class="table table-striped" border="1|1" class="table table-bordered" id="tabla">
+                    <thead>
+                    <tr class="warning">
+                        <td>Nombre Completo</td>
+                        <td>Cédula de identidad</td>
+                        <td>Fecha de nacimiento</td>
+                       <!-- <td>Género</td> -->
+                        <td>Dirección de domicilio</td>
+                        <td>Teléfono convencional</td>
+                        <td>Teléfono celular</td>
+                        <td>Correo electrónico</td>
+                        <td>Colaboraciones</td>
+					</tr>
+					</thead>
+            </div>
+<?php 
+
+    require '../../clases_negocio/funciones_administrador.php';
+    $idLogin = $_SESSION['id'];
+	$nombre = $_SESSION['usuario'];
+
+    $conexion = new Conexion();
+    $statement = "SELECT estudiante.id_usuario, estudiante.ci, estudiante.nombres, estudiante.apellidos, estudiante.mail, estudiante.domicilio, estudiante.celular, estudiante.convencional, estudiante.genero, estudiante.fecha_nacimiento, colaborador.colaboraciones, colaborador.idColaborador, colaborador.activo
+    FROM estudiante JOIN colaborador
+    on estudiante.id_usuario=colaborador.idUsuario
+    UNION
+    SELECT profesor.id_usuario, profesor.ci, profesor.nombres, profesor.apellidos, profesor.mail, profesor.domicilio, profesor.celular, profesor.convencional, profesor.genero, profesor.fecha_nacimiento, colaborador.colaboraciones, colaborador.idColaborador, colaborador.activo
+    FROM profesor JOIN colaborador
+    on profesor.id_usuario=colaborador.idUsuario";
+    
+    $criterio = filter_input(INPUT_POST, 'tipo_criterio');
+    $valor_criterio = filter_input(INPUT_POST, 'criterio_busqueda');
+    
+    $clausula_where = " ";
+        switch ($criterio) {
+            case 'apellido':
+                $clausula_where = ' and apellidos like "%' . $valor_criterio . '%" order by apellidos';
+                $statement = $statement . $clausula_where;
+                break;
+            case 'cedula':
+                $clausula_where = ' and ci like "%' . $valor_criterio . '%" order by ci';
+                $statement = $statement . $clausula_where;
+                break;
+        }
+    
+    $consulta = $conexion->prepare($statement);
+	$consulta->setFetchMode(PDO::FETCH_ASSOC);
+    $consulta->execute();
+    
+
+    if ($consulta->rowCount() != 0) {
+	while($row = $consulta->fetch()){
+		$id = $row['idColaborador'];
+        $usuario = $row['nombres'] . '  ' . $row['apellidos'] ;
+		$cedula = $row['ci'];
+        $fecha = $row['fecha_nacimiento'];
+        //$genero= $row['genero'];
+        $direccion = $row['domicilio'];
+        //$Tel_convencional= $row['convencional'];
+        $Tel_celular= $row['celular'];
+        $correo= $row['mail'];
+        $colaboraciones= $row['colaboraciones'];
+        $activo=$row['activo'];
+
+        echo "<tr>";
+			echo "<td>$usuario </td>";
+			echo "<td>$cedula</td>";
+            echo "<td>$fecha</td>";
+            //echo "<td>$genero</td>";
+            echo "<td>$direccion</td>";
+          //  echo "<td>$Tel_convencional</td>";
+            echo "<td>$Tel_celular</td>";
+            echo "<td>$correo</td>";
+            echo "<td>$colaboraciones</td>";
+            echo "<td>$activo</td>";
+            if ($row['activo'] == 'V') {
+                echo '<td><a href="eliminar_colaborador.php?id=' . $row['idColaborador'] . '&id_gestion=1">Desactivar</a></td>';
+            } else {
+                echo '<td><a href="eliminar_colaborador.php?id=' . $row['idColaborador'] . '&id_gestion=2">Activar</a></td>';
+            }
+		echo "</tr>";
+    }
+}
+
+
+    echo '</table>';
+    $id_gestion = filter_input(INPUT_GET, 'id_gestion');
+    $id = filter_input(INPUT_GET, 'id');
+    if ($id_gestion == 1) {
+     act_des_colaborador ($id, "F");
+        echo '<script>alert("Colaborador desactivado correctamente")</script> ';
+        echo "<script>location.href='eliminar_colaborador.php'</script>";
+          }
+   if ($id_gestion == 2) {
+    act_des_colaborador($id, "V");
+        echo '<script>alert("Colaborador activado correctamente")</script> ';
+          echo "<script>location.href='eliminar_colaborador.php'</script>";
+        }
+        
+    $conexion = null;
+
+?>
+</table>
+<br>
+<br>
+
+</body>
+
 
 </body>
 </html>
